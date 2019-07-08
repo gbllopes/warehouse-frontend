@@ -10,22 +10,29 @@ import Login from "../pages/Login";
 import Home from "../pages/Home";
 import NavBar from "../components/NavBar";
 
-const App = props => {
-  window.setTimeout(() => {
-    props.load(false);
-  }, 4000);
+class App extends React.Component{
 
-  const q = () => {
-    if (props.loaded) {
-      return (
-        <React.Fragment>
+  
+  renderLoad(){
+    window.setTimeout(() => {
+      this.props.load(false);
+    }, 4000);
+    
+    return (
+      <React.Fragment>
           <div style={{ marginTop: "15%", marginLeft: "48%" }}>
             <CircularProgress size={30} />
           </div>
         </React.Fragment>
-      );
-    }
+    );
+  }
 
+ 
+  render(){
+
+    if(this.props.loading){
+       return <div>{this.renderLoad()}</div>
+    }
     return (
       <div>
         <Router history={history}>
@@ -38,13 +45,12 @@ const App = props => {
         </Router>
       </div>
     );
-  };
+  }; 
 
-  return <div>{q()}</div>;
 };
 
 const myStateToProps = state => {
-  return state;
+  return { loading: state.loaded }
 };
 export default connect(
   myStateToProps,
