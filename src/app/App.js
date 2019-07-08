@@ -19,7 +19,6 @@ const App = props => {
     if (props.loaded) {
       return (
         <React.Fragment>
-          <NavBar />
           <div style={{ marginTop: "15%", marginLeft: "48%" }}>
             <CircularProgress size={30} />
           </div>
@@ -29,14 +28,14 @@ const App = props => {
 
     return (
       <div>
-        <NavBar>
-          <Router history={history}>
-            <Switch>
+        <Router history={history}>
+          <Switch>
+            <Route path="/login" exact component={Login} />
+            <NavBar>
               <Route path="/" exact component={Home} />
-              <Route path="/login" component={Login} />
-            </Switch>
-          </Router>
-        </NavBar>
+            </NavBar>
+          </Switch>
+        </Router>
       </div>
     );
   };
