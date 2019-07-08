@@ -3,5 +3,5 @@ import data from './data';
 
 
 export default combineReducers({
-    loaded: data 
+  loaded: data
 })
