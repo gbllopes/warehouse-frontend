@@ -12,11 +12,11 @@ import NavBar from "../components/NavBar";
 
 class App extends React.Component{
 
-  
+
   renderLoad(){
     window.setTimeout(() => {
       this.props.load(false);
-    }, 4000);
+    }, 0);
     
     return (
       <React.Fragment>
