@@ -1,21 +1,25 @@
 import React from 'react';
 import SignIn from '../components/SignIn';
-
+import {connect} from 'react-redux';
+import { autenticarUsuario } from '../actions/login';
 
 class Login extends React.Component{
-    
-    
-    onSubmit = (formValues) =>{
-        console.log(formValues)
+
+
+    onSubmit = async (formValues) =>{
+      this.props.autenticarUsuario(formValues);
     }
 
     render(){
-        return (
-            <div>          
-                <SignIn onSubmit={this.onSubmit} />
-            </div>
-        )
+      console.log("RENDER")
+      return (
+        <div>
+          <SignIn onSubmit={this.onSubmit} />
+        </div>
+      )
     }
 }
-
-export default Login;
+const myStateToProps = (state) =>{
+  return state;
+}
+export default connect(myStateToProps, {autenticarUsuario})(Login);

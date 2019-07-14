@@ -18,6 +18,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import {Link} from 'react-router-dom'
 
 const drawerWidth = 240;
 
@@ -148,6 +149,12 @@ export default function NavBar(props) {
               <ListItemText primary={text} />
             </ListItem>
           ))}
+          <Link to="/login" >
+            <ListItem button href="/login">
+              <ListItemIcon><InboxIcon /></ListItemIcon>
+              <ListItemText/>
+            </ListItem>
+          </Link>
         </List>
         <Divider />
         <List>

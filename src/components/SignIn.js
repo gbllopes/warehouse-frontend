@@ -17,17 +17,16 @@ import { FormHelperText, FormControl } from '@material-ui/core';
 
 const renderTextField = (
   { input,
-    label, 
+    label,
     name,
     id,
     type,
     meta: { touched, error, invalid},
     ...custom,
-    
+
   }) => {
-    console.log(error)
     return (
-      
+
       <div>
         <TextField
           variant="outlined"
@@ -47,9 +46,9 @@ const renderTextField = (
         </FormControl>
         </div>
     )
-  }  
-        
-  
+  }
+
+
 class SignIn extends React.Component{
 
 
@@ -61,73 +60,73 @@ class SignIn extends React.Component{
       return (
           <div>
             <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <div className="paper">
-                  <Avatar className="avatar">
-                    <LockOutlinedIcon />
-                  </Avatar>
-                  <Typography component="h1" variant="h5">
-                    Sign in
-                  </Typography>
-                  <form onSubmit={this.props.handleSubmit(this.onFormSubmit)}  noValidate>
-                    <Field 
-                      name="email" 
-                      component={renderTextField} 
-                      type="text" 
-                      id="email"
-                      label="Email"
-                      />
-                    <Field
-                      name="password"
-                      component={renderTextField}
-                      type="password"
-                      id="password"
-                      label="Password"
-                      autoComplete="current-password"
-                      />
-                    <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      className="submit"
-                    >
-                      Sign In
-                    </Button>
-                    <Grid container style={{ height: '15px'}}>
-                        <div className="lineOr" />
-                          <div className="orOption" >OR</div>
-                        <div className="lineOr" />
+              <CssBaseline />
+              <div className="paper">
+                <Avatar className="avatar">
+                  <LockOutlinedIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                  Sign in
+                </Typography>
+                <form onSubmit={this.props.handleSubmit(this.onFormSubmit)}  noValidate>
+                  <Field
+                    name="email"
+                    component={renderTextField}
+                    type="text"
+                    id="email"
+                    label="Email"
+                    />
+                  <Field
+                    name="password"
+                    component={renderTextField}
+                    type="password"
+                    id="password"
+                    label="Password"
+                    autoComplete="current-password"
+                    />
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className="submit"
+                  >
+                    Sign In
+                  </Button>
+                  <Grid container style={{ height: '15px'}}>
+                      <div className="lineOr" />
+                        <div className="orOption" >OR</div>
+                      <div className="lineOr" />
+                  </Grid>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    fullWidth
+                    className="googleButton"
+                  >
+                    <img src={googleIcon} alt="google icon" />
+                  </Button>
+                  <Grid container>
+                    <Grid item xs>
+                      <Link href="#" variant="body2">
+                        Forgot password?
+                      </Link>
                     </Grid>
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      fullWidth
-                      className="googleButton"   
-                    >
-                      <img src={googleIcon} alt="google icon" />
-                    </Button>
-                    <Grid container>
-                      <Grid item xs>
-                        <Link href="#" variant="body2">
-                          Forgot password?
-                        </Link>
-                      </Grid>
-                      <Grid item>
-                        <Link href="#" variant="body2">
-                          {"Don't have an account? Sign Up"}
-                        </Link>
-                      </Grid>
+                    <Grid item>
+                      <Link href="#" variant="body2">
+                        {"Don't have an account? Sign Up"}
+                      </Link>
                     </Grid>
-                  </form>
-                </div>
-                <Box mt={5}>
-                </Box>
+                  </Grid>
+                </form>
+              </div>
+              <Box mt={5}>
+              </Box>
           </Container>
           </div>
         );
-      }   
-}  
+      }
+}
 
 const validate = (formValues) =>{
   const errors = {}

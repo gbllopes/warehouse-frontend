@@ -17,7 +17,7 @@ class App extends React.Component{
     window.setTimeout(() => {
       this.props.load(false);
     }, 0);
-    
+
     return (
       <React.Fragment>
           <div style={{ marginTop: "15%", marginLeft: "48%" }}>
@@ -27,7 +27,7 @@ class App extends React.Component{
     );
   }
 
- 
+
   render(){
 
     if(this.props.loading){
@@ -45,7 +45,7 @@ class App extends React.Component{
         </Router>
       </div>
     );
-  }; 
+  };
 
 };
 
