@@ -1,1 +1,2 @@
-export const LOGIN = "LOGIN";
+export const AUTHENTICATED = "AUTHENTICATED";
+export const NOT_AUTHENTICATED = "NOT_AUTHENTICATED"

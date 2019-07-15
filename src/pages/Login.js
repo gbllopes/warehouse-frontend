@@ -1,20 +1,24 @@
 import React from 'react';
 import SignIn from '../components/SignIn';
 import {connect} from 'react-redux';
+
 import { autenticarUsuario } from '../actions/login';
+import history from '../history'
 
 class Login extends React.Component{
 
 
     onSubmit = async (formValues) =>{
-      this.props.autenticarUsuario(formValues);
+      await this.props.autenticarUsuario(formValues);
+      if(this.props.isAutenticado.logado){
+        history.push("/")
+      }
     }
 
     render(){
-      console.log("RENDER")
       return (
         <div>
-          <SignIn onSubmit={this.onSubmit} />
+          <SignIn info={this.props} onSubmit={this.onSubmit} />
         </div>
       )
     }

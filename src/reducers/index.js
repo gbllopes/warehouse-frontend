@@ -5,7 +5,7 @@ import login from './login'
 
 
 export default combineReducers({
-  login: login,
+  isAutenticado: login,
   loaded: data,
   form: formReducer
 })

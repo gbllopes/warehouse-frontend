@@ -9,6 +9,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Login from "../pages/Login";
 import Home from "../pages/Home";
 import NavBar from "../components/NavBar";
+import PrivateRoute from "../components/PrivateRoute";
 
 class App extends React.Component{
 
@@ -16,7 +17,7 @@ class App extends React.Component{
   renderLoad(){
     window.setTimeout(() => {
       this.props.load(false);
-    }, 0);
+    }, 2000);
 
     return (
       <React.Fragment>
@@ -29,17 +30,17 @@ class App extends React.Component{
 
 
   render(){
-
     if(this.props.loading){
        return <div>{this.renderLoad()}</div>
     }
     return (
+
       <div>
         <Router history={history}>
           <Switch>
             <Route path="/login" exact component={Login} />
             <NavBar>
-              <Route path="/" exact component={Home} />
+              <PrivateRoute isAutenticado={this.props.isAutenticado.logado} path='/' component={Home} />
             </NavBar>
           </Switch>
         </Router>
@@ -50,7 +51,7 @@ class App extends React.Component{
 };
 
 const myStateToProps = state => {
-  return { loading: state.loaded }
+  return { loading: state.loaded, isAutenticado:state.isAutenticado}
 };
 export default connect(
   myStateToProps,

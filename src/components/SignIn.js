@@ -56,6 +56,14 @@ class SignIn extends React.Component{
     this.props.onSubmit(formValues);
   }
 
+  erroDeCredenciais = () =>{
+    return this.props.info.isAutenticado.msg ? (
+      <FormControl error>
+       <FormHelperText>{this.props.info.isAutenticado.msg}</FormHelperText>
+      </FormControl>
+    ) : ''
+  }
+
   render(){
       return (
           <div>
@@ -84,6 +92,9 @@ class SignIn extends React.Component{
                     label="Password"
                     autoComplete="current-password"
                     />
+                  <div className="erroCredenciais">
+                    {this.erroDeCredenciais()}
+                  </div>
                   <Button
                     type="submit"
                     fullWidth
