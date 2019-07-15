@@ -11,7 +11,7 @@ export const autenticarUsuario = usuario => async dispatch =>{
     const response = await rest(GET_TOKEN).post(GET_TOKEN, body);
     if(response.status === 200){
       handlerToken(response.data.access_token);
-      const dados = tokenDecode(response.data.access_token, {complete: true});
+      const dados = tokenDecode(response.data.access_token);
       dados.isAutenticado = true;
       console.log("LOCAL STORAGE", localStorage.getItem("access_token"))
       return dispatch({type: AUTHENTICATED, payload: dados});
