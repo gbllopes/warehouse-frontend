@@ -13,6 +13,7 @@ export const autenticarUsuario = usuario => async dispatch =>{
       handlerToken(response.data.access_token);
       const dados = tokenDecode(response.data.access_token, {complete: true});
       dados.isAutenticado = true;
+      console.log("LOCAL STORAGE", localStorage.getItem("access_token"))
       return dispatch({type: AUTHENTICATED, payload: dados});
     }
 
