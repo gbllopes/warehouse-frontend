@@ -1,14 +1,14 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
+import { isTokenExpired } from '../authentication/oauthHandler';
 
 const PrivateRoute = ({component: Component, isAutenticado, ...rest}) => {
-  console.log("REST", rest);
   return (
     <Route
       {...rest}
-      render={(props) => isAutenticado === true
-        ? <Component {...props} />
-        : <Redirect to={{pathname: '/login', }} />}
+      render={(props) => !isTokenExpired(localStorage.getItem("access_token")) === true
+      ? <Component {...props} />
+      : <Redirect to={{pathname: '/login', }} />}
     />
   )
 }
