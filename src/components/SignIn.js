@@ -10,10 +10,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import googleIcon from '../icons/google-icon.png';
-import '../css/SignIn.css';
 
 import { Field, reduxForm } from 'redux-form';
 import { FormHelperText, FormControl } from '@material-ui/core';
+
+import '../css/SignIn.css'
 
 const renderTextField = (
   { input,
