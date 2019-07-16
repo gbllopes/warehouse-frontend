@@ -10,6 +10,7 @@ import Login from "../pages/Login";
 import Home from "../pages/Home";
 import NavBar from "../components/NavBar";
 import PrivateRoute from "../components/PrivateRoute";
+import ProductAdd from "../products/ProductAdd";
 
 class App extends React.Component{
 
@@ -40,7 +41,8 @@ class App extends React.Component{
           <Switch>
             <Route path="/login" exact component={Login} />
             <NavBar>
-              <PrivateRoute isAutenticado={this.props.isAutenticado.logado} path='/' component={Home} />
+              <PrivateRoute isAutenticado={this.props.isAutenticado.logado} path='/' exact component={Home} />
+              <PrivateRoute isAutenticado={this.props.isAutenticado.logado} path='/products/add' exact component={ProductAdd} />
             </NavBar>
           </Switch>
         </Router>
