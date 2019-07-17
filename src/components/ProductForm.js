@@ -14,6 +14,7 @@ import { TextField } from '@material-ui/core';
 import { Field, reduxForm } from 'redux-form';
 import { withStyles } from '@material-ui/core/styles'
 import { Container } from '@material-ui/core';
+import {rest} from '../authentication/tokenConfig'
 
 const styles = theme => ({
     form: {
@@ -45,7 +46,13 @@ const styles = theme => ({
 });
 
 class ProductForm extends React.Component{
-    
+    state = { setor: [] }
+    componentDidMount(){
+        rest("").get("/setor").then(response => {
+            this.setState({setor: response.data});
+        })
+    }
+
     tableProductAddButton(){ 
         if(this.props.action === 'add'){
             return (
@@ -105,7 +112,6 @@ class ProductForm extends React.Component{
 
     render(){
         const { classes } = this.props;
-        console.log(this.props.action)
         return (
             <Container fixed>
             <Box boxShadow={3} className={classes.content}>
@@ -155,14 +161,13 @@ class ProductForm extends React.Component{
                                         <Field
                                             name="setor"
                                             label="Setor"
-                                            onChange={this.handleChangeSelect}
                                             component={this.renderSelectInput}
                                             placeholder="Setor do Produto"
                                             className={classes.selectEmpty}
                                         >
-                                            <MenuItem value={10}>Alimentícios</MenuItem>
-                                            <MenuItem value={20}>Higiene</MenuItem>
-                                            <MenuItem value={30}>Roupas</MenuItem>
+                                            {this.state.setor.map((s) =>{
+                                                return  <MenuItem value={{s}} key={s.idSetor}>{s.dsSetor}</MenuItem>
+                                            })}
                                         </Field>
                                     </FormControl>
                                     
