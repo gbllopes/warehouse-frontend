@@ -4,12 +4,16 @@ import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem';
-import { Container } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
+import Icon from '@material-ui/core/Icon';
+import Button from '@material-ui/core/Button';
+import CloseIcon from '@material-ui/icons/Close';
+import AddIcon from '@material-ui/icons/Add';
 
 import { TextField } from '@material-ui/core';
 import { Field, reduxForm } from 'redux-form';
 import { withStyles } from '@material-ui/core/styles'
+import { Container } from '@material-ui/core';
 
 const styles = theme => ({
     form: {
@@ -22,7 +26,7 @@ const styles = theme => ({
     },
     cardInsert:{
         padding:'20px 20px',
-        marginBottom: '30px',
+        marginBottom: '10px',
         boxShadow: 'rgba(0, 0, 0, 0.2) 0px 1px 8px 0px, rgba(0, 0, 0, 0.14)'+
                     '0px 3px 4px 0px, rgba(0, 0, 0, 0.12) 0px 3px 3px -2px;',
     },
@@ -42,6 +46,17 @@ const styles = theme => ({
 
 class ProductForm extends React.Component{
     
+    tableProductAddButton(){ 
+        if(this.props.action === 'add'){
+            return (
+                <Button variant="contained" color="default" style={{marginRight:"10px"}}>
+                    <AddIcon style={{marginRigth:"5px"}}/>
+                    Produtos
+                </Button>
+            );
+        }     
+    }
+
     renderSelectInput = ({
         input,
         placeholder,
@@ -90,6 +105,7 @@ class ProductForm extends React.Component{
 
     render(){
         const { classes } = this.props;
+        console.log(this.props.action)
         return (
             <Container fixed>
             <Box boxShadow={3} className={classes.content}>
@@ -151,6 +167,17 @@ class ProductForm extends React.Component{
                                     </FormControl>
                                     
                             </Grid>
+                            <Box>
+                                {this.tableProductAddButton()}
+                                <Button type="submit" variant="contained" color="primary" >
+                                    Salvar
+                                    <Icon style={{marginLeft: '5px'}}>send</Icon>
+                                </Button>
+                                <Button variant="contained" color="secondary" style={{margin: '10px'}}>
+                                        Sair
+                                        <CloseIcon/>
+                                </Button>
+                            </Box>    
                         </form>       
                 </Grid>
                </Container>
