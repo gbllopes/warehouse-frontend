@@ -26,9 +26,10 @@ const useStyle = theme => ({
     }
 });
 class UserForm extends React.Component {
+    state = {cargo: []}
     componentDidMount(){
-        rest("").post("/cargos").then(response => {
-            this.cargo = response.data;
+        rest("").get("/cargos").then(response => {
+            this.setState({cargo: response.data});
         })
     }
     renderInput(campo) {
@@ -52,14 +53,13 @@ class UserForm extends React.Component {
       console.log(custom)
         return (
             <FormControl error={touched && error}>
-                <InputLabel htmlFor="age-native-simple">Age</InputLabel>
+                <InputLabel htmlFor="age-native-simple">{label}</InputLabel>
                     <Select
                         native
                         {...input}
                         {...custom}
                         inputProps={{
-                        name: 'age',
-                        id: 'age-native-simple'
+                        name: label
                         }}
                     >
                     {children}
@@ -133,14 +133,14 @@ class UserForm extends React.Component {
                                 <Grid item xs={6}>
                                 <Field
                                     classes={classes}
-                                    name="responsavel.cargo"
+                                    name="responsavel.idCargo"
                                     component={this.renderSelectField}
                                     label="Cargo"
                                     >
                                         <option value="" />
-                                        <option value={'ff0000'}>Red</option>
-                                        <option value={'00ff00'}>Green</option>
-                                        <option value={'0000ff'}>Blue</option>
+                                        {this.state.cargo.map(c => (
+                                            <option value={{c}} key={c.idCargo}>{c.dsCargo}</option>
+                                        ))}
                                     </Field>
                                 </Grid>
                             </Grid>
