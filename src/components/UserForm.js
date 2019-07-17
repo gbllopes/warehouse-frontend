@@ -139,7 +139,7 @@ class UserForm extends React.Component {
                                     >
                                         <option value="" />
                                         {this.state.cargo.map(c => (
-                                            <option value={{c}} key={c.idCargo}>{c.dsCargo}</option>
+                                            <option value={c.idCargo} key={c.idCargo}>{c.dsCargo}</option>
                                         ))}
                                     </Field>
                                 </Grid>
