@@ -8,13 +8,13 @@ import Box from '@material-ui/core/Box';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
 import CloseIcon from '@material-ui/icons/Close';
-import AddIcon from '@material-ui/icons/Add';
+import {rest} from '../authentication/tokenConfig';
 
 import { TextField } from '@material-ui/core';
 import { Field, reduxForm } from 'redux-form';
 import { withStyles } from '@material-ui/core/styles'
 import { Container } from '@material-ui/core';
-import {rest} from '../authentication/tokenConfig'
+
 
 const styles = theme => ({
     form: {
@@ -35,8 +35,8 @@ const styles = theme => ({
         marginTop: theme.spacing(2),
         width:'10px'
     },
-    content: {    
-        marginTop: '20px',   
+    container: {    
+         marginBottom: '20px'  
       },
       title: {
         height: '28px',
@@ -46,22 +46,11 @@ const styles = theme => ({
 });
 
 class ProductForm extends React.Component{
-    state = { setor: [] }
+    state = { setores : [] };
     componentDidMount(){
         rest("").get("/setor").then(response => {
-            this.setState({setor: response.data});
-        })
-    }
-
-    tableProductAddButton(){ 
-        if(this.props.action === 'add'){
-            return (
-                <Button variant="contained" color="default" style={{marginRight:"10px"}}>
-                    <AddIcon style={{marginRigth:"5px"}}/>
-                    Produtos
-                </Button>
-            );
-        }     
+            this.setState({ setores: response.data});
+        })   
     }
 
     renderSelectInput = ({
@@ -110,15 +99,19 @@ class ProductForm extends React.Component{
         );
     }
 
+    myFormSubmit = (formValues) =>{
+        this.props.onSubmit(formValues);
+    }
+
     render(){
         const { classes } = this.props;
         return (
             <Container fixed>
-            <Box boxShadow={3} className={classes.content}>
+            <Box boxShadow={3} className={classes.container}>
                 <h2 style={{ marginLeft: '28px' }}>{this.props.title}</h2>
                 <Container> 
                     <Grid container>
-                        <form className={classes.form} autoComplete="off" noValidate>
+                        <form className={classes.form} autoComplete="off" noValidate onSubmit={this.props.handleSubmit(this.myFormSubmit)}>
                             <Grid item className={classes.cardInsert} xs={12} >                
                                     <Field 
                                         name="marca" 
@@ -165,17 +158,16 @@ class ProductForm extends React.Component{
                                             placeholder="Setor do Produto"
                                             className={classes.selectEmpty}
                                         >
-                                            {this.state.setor.map((s) =>{
-                                                return  <MenuItem value={{s}} key={s.idSetor}>{s.dsSetor}</MenuItem>
+                                            {this.state.setores.map((setor) =>{
+                                                return  <MenuItem key={setor.idSetor} value={setor}>{setor.dsSetor}</MenuItem>
                                             })}
                                         </Field>
                                     </FormControl>
                                     
                             </Grid>
                             <Box>
-                                {this.tableProductAddButton()}
                                 <Button type="submit" variant="contained" color="primary" >
-                                    Salvar
+                                    {(this.props.action === 'add' ? 'Adicionar' : 'Editar')}
                                     <Icon style={{marginLeft: '5px'}}>send</Icon>
                                 </Button>
                                 <Button variant="contained" color="secondary" style={{margin: '10px'}}>
@@ -192,7 +184,6 @@ class ProductForm extends React.Component{
     }    
 
 }
-
 
 export default reduxForm({
     form: 'productForm'
