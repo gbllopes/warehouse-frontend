@@ -106,7 +106,16 @@ class UserForm extends React.Component {
                             <Box className={classes.box}>
                                 <Grid container>
                                     <Grid item xs={12}>
-
+                                        <FormControl className={classes.textField}>
+                                            <Field
+                                                name="email"
+                                                label="Email"
+                                                component={this.renderInput}
+                                                required={true}
+                                                type="text"
+                                                fullWidth
+                                                />
+                                        </FormControl>
                                     </Grid>
                                     <Grid item xs={6}>
                                         <Field
