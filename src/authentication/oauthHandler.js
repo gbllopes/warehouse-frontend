@@ -9,7 +9,7 @@ export const tokenDecode = token => jwt.decode(token);
 export const isTokenExpired = access_token => {
     const tokenDecoded = jwt.decode(access_token);
     if (tokenDecoded != null) {
-        if (new Date(tokenDecoded.exp) < new Date()) {
+        if (new Date(tokenDecoded.exp * 1000) > new Date()) {
             return false;
         }
         return true;
