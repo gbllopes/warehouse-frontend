@@ -12,7 +12,7 @@ class ProductAdd extends React.Component{
    renderProductList = products =>{
       return products.map((product, index) =>{
          return (
-            <div key={index}>{product}</div>
+            <div key={index}>{product.marca}</div>
          );
       })
    }
