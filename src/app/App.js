@@ -43,7 +43,7 @@ class App extends React.Component{
           <Switch>
             <Route path="/login" exact component={Login} />
             <NavBar>
-              <PrivateRoute isAutenticado={this.props.isAutenticado.logado} path='/' exact component={Home} />
+              <PrivateRoute isAutenticado={this.props.isAutenticado.logado} path='/home' exact component={Home} />
               <PrivateRoute isAutenticado={this.props.isAutenticado.logado} path='/products/add' exact component={ProductAdd} />
               <PrivateRoute isAutenticado={this.props.isAutenticado.logado} path='/products/edit' exact component={ProductEdit} />
               <PrivateRoute isAutenticado={this.props.isAutenticado.logado} path='/user/register' exact component={UsuarioCadastro} />

@@ -11,7 +11,7 @@ class Login extends React.Component{
     onSubmit = async (formValues) =>{
       await this.props.autenticarUsuario(formValues);
       if(this.props.isAutenticado.logado){
-        history.push("/")
+        history.push("/home")
       }
     }
 
