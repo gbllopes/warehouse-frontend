@@ -2,13 +2,14 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl'
+import { FormHelperText } from "@material-ui/core";
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem';
 import Box from '@material-ui/core/Box';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
-import CloseIcon from '@material-ui/icons/Close';
 import {rest} from '../authentication/tokenConfig';
+import Typography from '@material-ui/core/Typography';
 
 import { TextField } from '@material-ui/core';
 import { Field, reduxForm } from 'redux-form';
@@ -21,13 +22,12 @@ const styles = theme => ({
         display: 'flex',
         flexWrap: 'wrap',
     },
-    textField: {
-        margin: theme.spacing(0,1,5,5),
-        width: 300,
+    submitButton: {
+        margin: '10px 0'
     },
     cardInsert:{
         padding:'20px 20px',
-        marginBottom: '10px',
+        margin: '2px',
         boxShadow: 'rgba(0, 0, 0, 0.2) 0px 1px 8px 0px, rgba(0, 0, 0, 0.14)'+
                     '0px 3px 4px 0px, rgba(0, 0, 0, 0.12) 0px 3px 3px -2px;',
     },
@@ -59,6 +59,7 @@ class ProductForm extends React.Component{
         label,
         name,
         children,
+        meta: {touched, error}
     }) => {
         return (
             <>
@@ -70,10 +71,14 @@ class ProductForm extends React.Component{
                     id: 'age-native-simple'
                 }}
                 placeholder={placeholder}
+                error={touched && error}
+                required
                >
                    {children}
                </Select>    
-               
+               <FormControl>
+                    { touched && error && <FormHelperText>{error}</FormHelperText>}  
+                </FormControl>
             </>    
         );
     }
@@ -83,20 +88,29 @@ class ProductForm extends React.Component{
         input,
         label,
         placeholder,
-        className,
         type,
-    }) => {
+        meta: {touched, error},
+        ...custom
+    }) => { 
         return (
+          <> 
           <TextField 
             label={label}
             required
+            fullWidth
             type={type}
             placeholder={placeholder}
-            className={className}
-            {...input}   
-          />
-          
+            error={error && touched} 
+            {...input}
+            {...custom} 
+            
+          /> 
+         <FormControl>
+            { touched && error && <FormHelperText>{error}</FormHelperText>}  
+         </FormControl>
+          </>
         );
+        
     }
 
     myFormSubmit = (formValues) =>{
@@ -106,77 +120,78 @@ class ProductForm extends React.Component{
     render(){
         const { classes } = this.props;
         return (
-            <Container fixed>
-            <Box boxShadow={3} className={classes.container}>
-                <h2 style={{ marginLeft: '28px' }}>{this.props.title}</h2>
+            <Container fixed >
+            <Box boxShadow={3} className={classes.container} pt={3}>
                 <Container> 
-                    <Grid container>
-                        <form className={classes.form} autoComplete="off" noValidate onSubmit={this.props.handleSubmit(this.myFormSubmit)}>
-                            <Grid item className={classes.cardInsert} xs={12} >                
-                                    <Field 
-                                        name="marca" 
-                                        label="Marca" 
-                                        component={this.renderFieldInput} 
-                                        placeholder="Marca do Produto" 
-                                        className={classes.textField}
-                                    />
-                                    <Field 
-                                        name="fabricante" 
-                                        label="Fabricante" 
-                                        component={this.renderFieldInput} 
-                                        placeholder="Fabricante" 
-                                        className={classes.textField}
-                                    />
-                                    <Field 
-                                        name="tipo" 
-                                        label="Tipo de Produto" 
-                                        component={this.renderFieldInput} 
-                                        placeholder="Tipo de Produto" 
-                                        className={classes.textField}
-                                    />
-                                    <Field 
-                                        name="qtde_produto" 
-                                        label="Qtde em Estoque"  
-                                        type="number"
-                                        component={this.renderFieldInput} 
-                                        placeholder="Qtde em estoque" 
-                                        className={classes.textField}
-                                    />
-                                    <Field 
-                                        name="cod_produto" 
-                                        label="Cod. Produto"  
-                                        type="text"
-                                        component={this.renderFieldInput} 
-                                        placeholder="Código do Produto" 
-                                        className={classes.textField}
-                                    />
-                                    <FormControl className={classes.textField}>
-                                        <Field
-                                            name="setor"
-                                            label="Setor"
-                                            component={this.renderSelectInput}
-                                            placeholder="Setor do Produto"
-                                            className={classes.selectEmpty}
-                                        >
-                                            {this.state.setores.map((setor) =>{
-                                                return  <MenuItem key={setor.idSetor} value={setor}>{setor.dsSetor}</MenuItem>
-                                            })}
-                                        </Field>
-                                    </FormControl>
-                                    
-                            </Grid>
-                            <Box>
-                                <Button type="submit" variant="contained" color="primary" >
-                                    {(this.props.action === 'add' ? 'Adicionar' : 'Editar')}
-                                    <Icon style={{marginLeft: '5px'}}>send</Icon>
-                                </Button>
-                                <Button variant="contained" color="secondary" style={{margin: '10px'}}>
-                                        Sair
-                                        <CloseIcon/>
-                                </Button>
-                            </Box>    
-                        </form>       
-                </Grid>
+                <Typography variant="h6" gutterBottom>
+                    {this.props.title}
+                </Typography>
+                <form className={classes.form} autoComplete="off" noValidate onSubmit={this.props.handleSubmit(this.myFormSubmit)}>
+                    <Grid container spacing={3} className={classes.cardInsert}>      
+                        <Grid item xs={12} md={4} >
+                            <Field 
+                                name="marca" 
+                                label="Marca" 
+                                component={this.renderFieldInput} 
+                                placeholder="Marca do Produto"  
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            <Field 
+                                name="fabricante" 
+                                label="Fabricante" 
+                                component={this.renderFieldInput} 
+                                placeholder="Fabricante" 
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            <Field 
+                                name="tipo" 
+                                label="Tipo de Produto" 
+                                component={this.renderFieldInput} 
+                                placeholder="Tipo de Produto" 
+                            />    
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            <Field 
+                                name="qtde_produto" 
+                                label="Qtde em Estoque"  
+                                type="number"
+                                component={this.renderFieldInput} 
+                                placeholder="Qtde em estoque" 
+                            />
+                        </Grid> 
+                        <Grid item xs={12} md={4}>
+                            <Field 
+                                name="cod_produto" 
+                                label="Cod. Produto"  
+                                type="text"
+                                component={this.renderFieldInput} 
+                                placeholder="Código do Produto" 
+                            />   
+                        </Grid>     
+                        <Grid item xs={12} md={4}>
+                            <FormControl fullWidth>
+                                <Field
+                                    name="setor"
+                                    label="Setor"
+                                    component={this.renderSelectInput}
+                                    placeholder="Setor do Produto"
+                                >
+                                    {this.state.setores.map((setor) =>{
+                                        return  <MenuItem key={setor.idSetor} value={setor}>{setor.dsSetor}</MenuItem>
+                                    })}
+                                </Field>
+                            </FormControl>
+                        </Grid>                               
+                    </Grid>
+                    <Grid xs={12} style={{ textAlign: 'right'}}>
+                        <Button type="submit" variant="contained" color="primary" className={classes.submitButton}>
+                            {(this.props.action === 'add' ? 'Adicionar' : 'Editar')}
+                            <Icon style={{marginLeft: '5px'}}>send</Icon>
+                        </Button>
+                    </Grid> 
+                </form> 
                </Container>
             </Box> 
             </Container>
@@ -185,6 +200,35 @@ class ProductForm extends React.Component{
 
 }
 
+const validate = (formValues) =>{
+    const errors = {}
+    const requiredFields = [
+        'marca',
+        'fabricante',
+        'tipo',
+        'cod_produto',
+    ]
+
+    requiredFields.forEach(field => {
+        if(!formValues[field]){
+            errors[field] = 'Campo Obrigatório';
+        }
+    })
+
+    if(!formValues.setor){
+        errors.setor = "Campo Obrigatório";
+    }
+
+    if(!formValues.qtde_produto){
+        errors.qtde_produto = "Campo Obrigatório"
+    }else if (isNaN(Number(formValues.qtde_produto))){
+        errors.qtde_produto = "Somente números são aceitos";
+    }
+
+    return errors;
+}
+
 export default reduxForm({
-    form: 'productForm'
+    form: 'productForm',
+    validate
 })(withStyles(styles)(ProductForm))
