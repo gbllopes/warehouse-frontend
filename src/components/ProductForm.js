@@ -13,37 +13,9 @@ import Typography from '@material-ui/core/Typography';
 
 import { TextField } from '@material-ui/core';
 import { Field, reduxForm } from 'redux-form';
-import { withStyles } from '@material-ui/core/styles'
 import { Container } from '@material-ui/core';
+import '../css/Form.css'
 
-
-const styles = theme => ({
-    form: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    submitButton: {
-        margin: '10px 0'
-    },
-    cardInsert:{
-        padding:'20px 20px',
-        margin: '2px',
-        boxShadow: 'rgba(0, 0, 0, 0.2) 0px 1px 8px 0px, rgba(0, 0, 0, 0.14)'+
-                    '0px 3px 4px 0px, rgba(0, 0, 0, 0.12) 0px 3px 3px -2px;',
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2),
-        width:'10px'
-    },
-    container: {    
-         marginBottom: '20px'  
-      },
-      title: {
-        height: '28px',
-        lineHeight: '30px',
-        fontSize: '15px'
-      },
-});
 
 class ProductForm extends React.Component{
     state = { setores : [] };
@@ -99,7 +71,6 @@ class ProductForm extends React.Component{
             required
             fullWidth
             type={type}
-            placeholder={placeholder}
             error={error && touched} 
             {...input}
             {...custom} 
@@ -118,38 +89,34 @@ class ProductForm extends React.Component{
     }
 
     render(){
-        const { classes } = this.props;
         return (
             <Container fixed >
-            <Box boxShadow={3} className={classes.container} pt={3}>
+            <Box boxShadow={3} id="container" pt={3}>
                 <Container> 
                 <Typography variant="h6" gutterBottom>
                     {this.props.title}
                 </Typography>
-                <form className={classes.form} autoComplete="off" noValidate onSubmit={this.props.handleSubmit(this.myFormSubmit)}>
-                    <Grid container spacing={3} className={classes.cardInsert}>      
+                <form id="formContent" autoComplete="off" noValidate onSubmit={this.props.handleSubmit(this.myFormSubmit)}>
+                    <Grid container spacing={3} id="cardContent">      
                         <Grid item xs={12} md={4} >
                             <Field 
                                 name="marca" 
                                 label="Marca" 
-                                component={this.renderFieldInput} 
-                                placeholder="Marca do Produto"  
+                                component={this.renderFieldInput}  
                             />
                         </Grid>
                         <Grid item xs={12} md={4}>
                             <Field 
                                 name="fabricante" 
                                 label="Fabricante" 
-                                component={this.renderFieldInput} 
-                                placeholder="Fabricante" 
+                                component={this.renderFieldInput}  
                             />
                         </Grid>
                         <Grid item xs={12} md={4}>
                             <Field 
                                 name="tipo" 
                                 label="Tipo de Produto" 
-                                component={this.renderFieldInput} 
-                                placeholder="Tipo de Produto" 
+                                component={this.renderFieldInput}  
                             />    
                         </Grid>
                         <Grid item xs={12} md={4}>
@@ -157,8 +124,7 @@ class ProductForm extends React.Component{
                                 name="qtde_produto" 
                                 label="Qtde em Estoque"  
                                 type="number"
-                                component={this.renderFieldInput} 
-                                placeholder="Qtde em estoque" 
+                                component={this.renderFieldInput}  
                             />
                         </Grid> 
                         <Grid item xs={12} md={4}>
@@ -167,7 +133,6 @@ class ProductForm extends React.Component{
                                 label="Cod. Produto"  
                                 type="text"
                                 component={this.renderFieldInput} 
-                                placeholder="Código do Produto" 
                             />   
                         </Grid>     
                         <Grid item xs={12} md={4}>
@@ -186,7 +151,7 @@ class ProductForm extends React.Component{
                         </Grid>                               
                     </Grid>
                     <Grid xs={12} style={{ textAlign: 'right'}}>
-                        <Button type="submit" variant="contained" color="primary" className={classes.submitButton}>
+                        <Button type="submit" variant="contained" color="primary" id="saveButton">
                             {(this.props.action === 'add' ? 'Adicionar' : 'Editar')}
                             <Icon style={{marginLeft: '5px'}}>send</Icon>
                         </Button>
@@ -231,4 +196,4 @@ const validate = (formValues) =>{
 export default reduxForm({
     form: 'productForm',
     validate
-})(withStyles(styles)(ProductForm))
+})(ProductForm)

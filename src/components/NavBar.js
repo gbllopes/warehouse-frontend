@@ -160,7 +160,7 @@ export default function NavBar(props) {
                                     <ListItemText  primary="Cadastrar Produto"/>
                                 </ListItem>
                             </NavLink>
-                            <NavLink to="/products/add"style={{color: '#696f78', textDecoration: 'none'}} activeClassName={classes.routeActive}>
+                            <NavLink to="/company/add"style={{color: '#696f78', textDecoration: 'none'}} activeClassName={classes.routeActive}>
                                 <ListItem button className={classes.nested}>
                                     <ListItemIcon>
                                         <Domain />
@@ -178,7 +178,7 @@ export default function NavBar(props) {
     const tokenDecoded = tokenDecode(localStorage.getItem('access_token'));
 
     const menuHaveAccess = () => {
-        if(tokenDecoded.authorities != undefined){
+        if(tokenDecoded.authorities !== undefined){
             const menus = []
             tokenDecoded.authorities.forEach(permission => {
                 menuItens.forEach(item => {

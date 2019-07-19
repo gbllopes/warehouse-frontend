@@ -2,7 +2,7 @@ import { rest } from '../authentication/tokenConfig';
 import  { handlerToken, tokenDecode } from '../authentication/oauthHandler';
 
 import { ENDPOINT } from '../constants/token';
-import {AUTHENTICATED, NOT_AUTHENTICATED} from '../constants/login'
+import { AUTHENTICATED, NOT_AUTHENTICATED } from '../constants/login'
 
 export const autenticarUsuario = usuario => async dispatch =>{
   try{

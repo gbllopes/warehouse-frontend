@@ -13,6 +13,7 @@ import PrivateRoute from "../components/PrivateRoute";
 import ProductAdd from "../pages/products/ProductAdd";
 import ProductEdit from "../pages/products/ProductEdit";
 import UsuarioCadastro from "../pages/UsuarioCadastro";
+import EmpresaCadastro from "../pages/EmpresaCadastro";
 
 class App extends React.Component{
 
@@ -47,6 +48,7 @@ class App extends React.Component{
               <PrivateRoute isAutenticado={this.props.isAutenticado.logado} path='/products/add' exact component={ProductAdd} />
               <PrivateRoute isAutenticado={this.props.isAutenticado.logado} path='/products/edit' exact component={ProductEdit} />
               <PrivateRoute isAutenticado={this.props.isAutenticado.logado} path='/user/register' exact component={UsuarioCadastro} />
+              <PrivateRoute isAutenticado={this.props.isAutenticado.logado} path='/company/add' exact component={EmpresaCadastro} />
             </NavBar>
           </Switch>
         </Router>
