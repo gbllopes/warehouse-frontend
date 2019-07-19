@@ -46,7 +46,6 @@ class UserForm extends React.Component {
     }
 
     renderInput(campo) {
-        console.log(campo);
         return (
             <div>
                 <TextField
@@ -72,7 +71,6 @@ class UserForm extends React.Component {
         children,
         ...custom
       }) => {
-      console.log(custom)
         return (
             <React.Fragment>
                 <InputLabel htmlFor='age-native-simple'>{label}</InputLabel>
@@ -93,7 +91,6 @@ class UserForm extends React.Component {
     }
 
     render() {
-        console.log(this.props);
         const { classes } = this.props;
         return (
         <div className={classes.div}>
@@ -160,12 +157,12 @@ class UserForm extends React.Component {
                                     <Grid item xs={6}>
                                         <FormControl className={classes.textField}>
                                             <Field
-                                                name="responsavel.cargo.idCargo"
+                                                name="responsavel.cargo"
                                                 component={this.renderSelectField}
                                                 label="Cargo"
                                                 >
                                                 {this.state.cargo.map(c => (
-                                                    <MenuItem value={c.idCargo} key={c.idCargo}>{c.dsCargo}</MenuItem>
+                                                    <MenuItem value={c} key={c.idCargo}>{c.dsCargo}</MenuItem>
                                                     ))}
                                             </Field>
                                         </FormControl>

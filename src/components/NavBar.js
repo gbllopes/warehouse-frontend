@@ -16,9 +16,18 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Collapse from '@material-ui/core/Collapse';
+import { NavLink } from 'react-router-dom';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import {Link} from 'react-router-dom'
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import Domain from '@material-ui/icons/Domain';
+import AddCircle from '@material-ui/icons/AddCircle'
+
+import {tokenDecode} from '../authentication/oauthHandler'
+import SvgIcon from '@material-ui/icons/Menu';
 
 const drawerWidth = 240;
 
@@ -81,12 +90,19 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  routeActive: {
+      backgroundColor: '#babcbf'
+  },
+  nested: {
+      paddingLeft: theme.spacing(4)
+  }
 }));
 
 export default function NavBar(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
+  const [menuOpen, setMenuOpen] = React.useState(false);
 
   function handleDrawerOpen() {
     setOpen(true);
@@ -95,6 +111,77 @@ export default function NavBar(props) {
   function handleDrawerClose() {
     setOpen(false);
   }
+
+
+    function handleClick() {
+      setMenuOpen(!menuOpen);
+    }
+
+    const menuItens = [
+        {
+            permission: "ROLE_ADMIN",
+            item: (
+                <div  key={0}>
+                    <ListItem button onClick={handleClick}>
+                        <ListItemIcon><AccountCircle></AccountCircle></ListItemIcon>
+                        <ListItemText primary="Usuario" ></ListItemText>
+                        {menuOpen ? <ExpandLess /> : <ExpandMore />}
+                    </ListItem>
+                    <NavLink to="/user/register" style={{color: '#696f78', textDecoration: 'none'}} activeClassName={classes.routeActive}>
+                        <Collapse in={menuOpen} timeout="auto" unmountOnExit>
+                            <List component="div" disablePadding>
+                            <ListItem button className={classes.nested}>
+                                <ListItemIcon>
+                                <AddCircle />
+                                </ListItemIcon>
+                                <ListItemText primary="Cadastrar Usuario" />
+                            </ListItem>
+                            </List>
+                        </Collapse>
+                    </NavLink>
+                </div>
+            )
+        },
+        {
+            permission: "ROLE_EDITAR",
+            item: (
+                <NavLink to="/products/add" key={1} style={{color: '#696f78', textDecoration: 'none'}} activeClassName={classes.routeActive}>
+                    <ListItem button>
+                        <ListItemIcon><Domain></Domain></ListItemIcon>
+                        <ListItemText  primary="Cadastrar Produto"/>
+                    </ListItem>
+                </NavLink>
+            )
+        },
+        {
+            permission: "ROLE_CADASTRAR",
+            item: (
+                <NavLink to="/products/edit" key={2} style={{color: '#696f78', textDecoration: 'none'}} activeClassName={classes.routeActive}>
+                    <ListItem button>
+                        <ListItemIcon><InboxIcon>pen</InboxIcon></ListItemIcon>
+                        <ListItemText  primary="Editar Produto"/>
+                    </ListItem>
+                </NavLink>
+            )
+        }
+    ]
+
+    const tokenDecoded = tokenDecode(localStorage.getItem('access_token'));
+
+    const menuHaveAccess = () => {
+        if(tokenDecoded.authorities != undefined){
+            const menus = []
+            tokenDecoded.authorities.forEach(permission => {
+                menuItens.forEach(item => {
+                    if(permission.includes(item.permission)){
+                        menus.push(item.item);
+                    }
+                })
+            })
+            return menus;
+        }
+        return [];
+    }
 
   return (
     <div className={classes.root}>
@@ -118,7 +205,7 @@ export default function NavBar(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Almoxarifado
+            ALMOXARIFADO
           </Typography>
         </Toolbar>
       </AppBar>
@@ -143,27 +230,7 @@ export default function NavBar(props) {
         </div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-          <Link to="/login" >
-            <ListItem button href="/login">
-              <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText/>
-            </ListItem>
-          </Link>
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+            {menuHaveAccess()}
         </List>
       </Drawer>
       <main className={classes.content}>
