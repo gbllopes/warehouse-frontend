@@ -98,26 +98,19 @@ class ProductForm extends React.Component{
                 </Typography>
                 <form id="formContent" autoComplete="off" noValidate onSubmit={this.props.handleSubmit(this.myFormSubmit)}>
                     <Grid container spacing={3} id="cardContent">      
-                        <Grid item xs={12} md={4} >
+                        <Grid item xs={12} md={6} >
                             <Field 
-                                name="marca" 
-                                label="Marca" 
+                                name="no_produto" 
+                                label="Nome" 
                                 component={this.renderFieldInput}  
                             />
                         </Grid>
-                        <Grid item xs={12} md={4}>
+                        <Grid item xs={12} md={6}>
                             <Field 
                                 name="fabricante" 
                                 label="Fabricante" 
                                 component={this.renderFieldInput}  
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <Field 
-                                name="tipo" 
-                                label="Tipo de Produto" 
-                                component={this.renderFieldInput}  
-                            />    
+                            />  
                         </Grid>
                         <Grid item xs={12} md={4}>
                             <Field 
@@ -129,7 +122,7 @@ class ProductForm extends React.Component{
                         </Grid> 
                         <Grid item xs={12} md={4}>
                             <Field 
-                                name="cod_produto" 
+                                name="codigo_produto" 
                                 label="Cod. Produto"  
                                 type="text"
                                 component={this.renderFieldInput} 
@@ -168,10 +161,10 @@ class ProductForm extends React.Component{
 const validate = (formValues) =>{
     const errors = {}
     const requiredFields = [
-        'marca',
+        'no_produto',
         'fabricante',
         'tipo',
-        'cod_produto',
+        'codigo_produto',
     ]
 
     requiredFields.forEach(field => {
