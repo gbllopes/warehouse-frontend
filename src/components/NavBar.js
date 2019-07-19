@@ -21,13 +21,13 @@ import { NavLink } from 'react-router-dom';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Domain from '@material-ui/icons/Domain';
 import AddCircle from '@material-ui/icons/AddCircle'
+import Assignment from "@material-ui/icons/Assignment";
+import Build from '@material-ui/icons/Build'
 
 import {tokenDecode} from '../authentication/oauthHandler'
-import SvgIcon from '@material-ui/icons/Menu';
 
 const drawerWidth = 240;
 
@@ -102,7 +102,8 @@ export default function NavBar(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
-  const [menuOpen, setMenuOpen] = React.useState(false);
+  const [menuOpen1, setMenuOpen1] = React.useState(false);
+  const [menuOpen2, setMenuOpen2] = React.useState(false);
 
   function handleDrawerOpen() {
     setOpen(true);
@@ -113,55 +114,63 @@ export default function NavBar(props) {
   }
 
 
-    function handleClick() {
-      setMenuOpen(!menuOpen);
-    }
-
     const menuItens = [
         {
             permission: "ROLE_ADMIN",
             item: (
                 <div  key={0}>
-                    <ListItem button onClick={handleClick}>
+                    <ListItem button onClick={()=> setMenuOpen1(!menuOpen1)}>
                         <ListItemIcon><AccountCircle></AccountCircle></ListItemIcon>
                         <ListItemText primary="Usuario" ></ListItemText>
-                        {menuOpen ? <ExpandLess /> : <ExpandMore />}
+                        {menuOpen1 ? <ExpandLess /> : <ExpandMore />}
                     </ListItem>
-                    <NavLink to="/user/register" style={{color: '#696f78', textDecoration: 'none'}} activeClassName={classes.routeActive}>
-                        <Collapse in={menuOpen} timeout="auto" unmountOnExit>
-                            <List component="div" disablePadding>
-                            <ListItem button className={classes.nested}>
-                                <ListItemIcon>
-                                <AddCircle />
-                                </ListItemIcon>
-                                <ListItemText primary="Cadastrar Usuario" />
-                            </ListItem>
-                            </List>
-                        </Collapse>
-                    </NavLink>
+                    <Collapse in={menuOpen1} timeout="auto" unmountOnExit>
+                        <List component="div" disablePadding>
+                            <NavLink to="/user/register" style={{color: '#696f78', textDecoration: 'none'}} activeClassName={classes.routeActive}>
+                                <ListItem button className={classes.nested}>
+                                    <ListItemIcon>
+                                        <AddCircle />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Cadastrar Usuario" />
+                                </ListItem>
+                            </NavLink>
+                        </List>
+                    </Collapse>
                 </div>
-            )
-        },
-        {
-            permission: "ROLE_EDITAR",
-            item: (
-                <NavLink to="/products/add" key={1} style={{color: '#696f78', textDecoration: 'none'}} activeClassName={classes.routeActive}>
-                    <ListItem button>
-                        <ListItemIcon><Domain></Domain></ListItemIcon>
-                        <ListItemText  primary="Cadastrar Produto"/>
-                    </ListItem>
-                </NavLink>
             )
         },
         {
             permission: "ROLE_CADASTRAR",
             item: (
-                <NavLink to="/products/edit" key={2} style={{color: '#696f78', textDecoration: 'none'}} activeClassName={classes.routeActive}>
-                    <ListItem button>
-                        <ListItemIcon><InboxIcon>pen</InboxIcon></ListItemIcon>
-                        <ListItemText  primary="Editar Produto"/>
+                <div key={1}>
+
+                    <ListItem button onClick={() => setMenuOpen2(!menuOpen2)}>
+                        <ListItemIcon><Build /></ListItemIcon>
+                        <ListItemText primary="Gerenciamento" ></ListItemText>
+                        {menuOpen2 ? <ExpandLess /> : <ExpandMore />}
                     </ListItem>
-                </NavLink>
+
+                    <Collapse in={menuOpen2} timeout="auto" unmountOnExit>
+                        <List component="div" disablePadding >
+                            <NavLink to="/products/add"style={{color: '#696f78', textDecoration: 'none'}} activeClassName={classes.routeActive}>
+                                <ListItem button className={classes.nested}>
+                                    <ListItemIcon>
+                                        <Assignment />
+                                    </ListItemIcon>
+                                    <ListItemText  primary="Cadastrar Produto"/>
+                                </ListItem>
+                            </NavLink>
+                            <NavLink to="/products/add"style={{color: '#696f78', textDecoration: 'none'}} activeClassName={classes.routeActive}>
+                                <ListItem button className={classes.nested}>
+                                    <ListItemIcon>
+                                        <Domain />
+                                    </ListItemIcon>
+                                    <ListItemText  primary="Cadastrar Empresa"/>
+                                </ListItem>
+                            </NavLink>
+                        </List>
+                    </Collapse>
+                </div>
             )
         }
     ]
