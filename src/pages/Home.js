@@ -62,7 +62,7 @@ class Home extends React.Component {
 
     componentDidMount = () =>{
         console.log(localStorage.getItem("access_token"))
-        rest('').get(`${ENDPOINT}/empresa`);
+        rest('').get(`${ENDPOINT}/company`);
     }
 
     render(){

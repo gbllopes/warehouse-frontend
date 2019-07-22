@@ -46,6 +46,7 @@ class UserForm extends React.Component {
     }
 
     renderInput(campo) {
+        console.log(campo);
         return (
             <div>
                 <TextField
@@ -54,6 +55,7 @@ class UserForm extends React.Component {
                     {...campo.input}
                     {...campo}
                     error={campo.meta.error && campo.meta.touched}
+                    fullWidth
                     >
                 </TextField>
                 {
@@ -64,27 +66,33 @@ class UserForm extends React.Component {
         )
     }
 
+
     renderSelectField = ({
         input,
         label,
         meta: { touched, error },
         children,
         ...custom
-      }) => {
+    }) => {
         return (
             <React.Fragment>
                 <InputLabel htmlFor='age-native-simple'>{label}</InputLabel>
                 <Select
-                    {...input}
-                    {...custom}
+                    label={label}
                     inputProps={{
                         name: label,
                         id: 'age-native-simple',
                     }}
-                    label={label}
+                    error={error && touched}
+                    {...input}
+                    {...custom}
                     >
                     {children}
                 </Select>
+                {
+                    error && touched &&
+                    <FormHelperText error>{error}</FormHelperText>
+                }
             </React.Fragment>
 
         )
@@ -105,7 +113,18 @@ class UserForm extends React.Component {
                                     <Grid item xs={12}>
                                         <FormControl className={classes.textField}>
                                             <Field
-                                                name="email"
+                                                name="noResponsavel"
+                                                label="Nome Completo"
+                                                component={this.renderInput}
+                                                required={true}
+                                                type="text"
+                                                />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <FormControl className={classes.textField}>
+                                            <Field
+                                                name="usuario.email"
                                                 label="Email"
                                                 component={this.renderInput}
                                                 required={true}
@@ -115,49 +134,42 @@ class UserForm extends React.Component {
                                         </FormControl>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <Field
-                                            name="secret"
-                                            label="Senha"
-                                            component={this.renderInput}
-                                            required={true}
-                                            className={classes.textField}
-                                            type="password"
-                                            />
-                                        </Grid>
-                                    <Grid item xs={6}>
-                                        <Field
-                                            name="secretConfirm"
-                                            label="Confirmar Senha"
-                                            component={this.renderInput}
-                                            required={true}
-                                            className={classes.textField}
-                                            type="password"
-                                            />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Field
-                                            name="responsavel.nome"
-                                            label="Nome Completo"
-                                            component={this.renderInput}
-                                            required={true}
-                                            className={classes.textField}
-                                            type="text"
-                                            />
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <Field
-                                            name="responsavel.empresa"
-                                            label="Empresa"
-                                            component={this.renderInput}
-                                            required={true}
-                                            className={classes.textField}
-                                            type="text"
-                                            />
+                                        <FormControl className={classes.textField}>
+                                            <Field
+                                                name="usuario.secret"
+                                                label="Senha"
+                                                component={this.renderInput}
+                                                required={true}
+                                                type="password"
+                                                />
+                                        </FormControl>
                                     </Grid>
                                     <Grid item xs={6}>
                                         <FormControl className={classes.textField}>
                                             <Field
-                                                name="responsavel.cargo"
+                                                name="usuario.secretConfirm"
+                                                label="Confirmar Senha"
+                                                component={this.renderInput}
+                                                required={true}
+                                                type="password"
+                                                />
+                                            </FormControl>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <FormControl className={classes.textField}>
+                                            <Field
+                                                name="empresa"
+                                                label="Empresa"
+                                                component={this.renderInput}
+                                                required={true}
+                                                type="text"
+                                                />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <FormControl className={classes.textField}>
+                                            <Field
+                                                name="cargo"
                                                 component={this.renderSelectField}
                                                 label="Cargo"
                                                 >
@@ -192,10 +204,39 @@ class UserForm extends React.Component {
 }
 
 const validate = values => {
-    const errors = {}
-    if(!values["email"]){
-        errors.email = "Campo de preenchimento obrigatório"
+    const requiredFields = [
+    'noResponsavel',
+    'cargo',
+    'empresa'
+    ];
+    const userFields = [
+        'email',
+        'secret',
+        'secretConfirm'
+    ]
+    const errors = {};
+    errors.usuario = {}
+    values.usuario = !values.usuario ? {}: values.usuario;
+    requiredFields.forEach( field => {
+        if(!values[field]){
+            errors[field] = "Campo de preenchimento obrigatório";
+        }
+    })
+
+    userFields.forEach(field => {
+        if(!values.usuario[field]){
+            errors.usuario[field] = "Campo de preenchimento obrigatório";
+        }
+    })
+
+    if(values.usuario.secret && values.usuario.secretConfirm){
+        if(values.usuario.secret !== values.usuario.secretConfirm){
+            errors.usuario.secretConfirm = "As senhas informadas não coincidem"
+        }
     }
+
+
+    console.log(values);
     return errors;
 }
 

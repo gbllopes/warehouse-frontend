@@ -5,9 +5,10 @@ import { rest } from "../authentication/tokenConfig";
 class UsuarioCadastro extends React.Component {
     onSubmit = (form) =>{
         console.log("CHEGOU", form)
-        form.responsavel.empresa = {}
-        form.responsavel.empresa.idEmpresa = 1;
-        rest("").post("/usuario", form);
+        form.empresa = {}
+        form.empresa.idEmpresa = 1;
+        form.dataNascimentoResponsavel = new Date();
+        rest("").post("/responsavel", form);
 
     }
 
