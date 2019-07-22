@@ -75,7 +75,7 @@ class EmpresaCadastro extends React.Component{
                             <Grid container spacing={3} id="cardContent">      
                                 <Grid item xs={12} sm={12} >
                                     <Field 
-                                        name="no_razao_social" 
+                                        name="noRazaoSocial" 
                                         label="Nome/Razão Social" 
                                         component={this.renderFieldInput}   
                                     />
@@ -83,28 +83,28 @@ class EmpresaCadastro extends React.Component{
                                 
                                 <Grid item xs={12} sm={4}>
                                     <Field 
-                                        name="sigla_empresa" 
+                                        name="siglaEmpresa" 
                                         label="Sigla da Empresa" 
                                         component={this.renderFieldInput} 
                                     />    
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
                                     <Field 
-                                        name="nr_cnpj_empresa" 
+                                        name="nrCnpjEmpresa" 
                                         label="CNPJ"  
                                         component={this.renderFieldInput} 
                                     />
                                 </Grid> 
                                 <Grid item xs={12} sm={4}>
                                     <Field 
-                                        name="telefone_empresa" 
+                                        name="telefoneEmpresa" 
                                         label="Telefone"  
                                         component={this.renderFieldInput} 
                                     />   
                                 </Grid>     
                                 <Grid item xs={12} sm={3}>
                                     <Field 
-                                        name="data_fundacao_empresa" 
+                                        name="dataFundacaoEmpresa" 
                                         label="Data da Fundação" 
                                         type="date"
                                         component={this.renderFieldInput} 
@@ -112,7 +112,7 @@ class EmpresaCadastro extends React.Component{
                                 </Grid>
                                 <Grid item xs={12} sm={9}>
                                     <Field 
-                                        name="email_empresa" 
+                                        name="emailEmpresa" 
                                         label="Email" 
                                         component={this.renderFieldInput} 
                                     />
@@ -137,12 +137,12 @@ class EmpresaCadastro extends React.Component{
 const validate = formValues =>{
     const errors = [];
     const requiredFields = [
-        'no_razao_social',
-        'sigla_empresa',
-        'nr_cnpj_empresa',
-        'telefone_empresa',
-        'data_fundacao_empresa',
-        'email_empresa'
+        'noRazaoSocial',
+        'siglaEmpresa',
+        'nrCnpjEmpresa',
+        'telefoneEmpresa',
+        'dataFundacaoEmpresa',
+        'emailEmpresa'
     ]
 
     requiredFields.forEach(field =>{

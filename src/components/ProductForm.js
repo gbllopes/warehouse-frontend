@@ -100,7 +100,7 @@ class ProductForm extends React.Component{
                     <Grid container spacing={3} id="cardContent">      
                         <Grid item xs={12} md={6} >
                             <Field 
-                                name="no_produto" 
+                                name="noProduto" 
                                 label="Nome" 
                                 component={this.renderFieldInput}  
                             />
@@ -114,7 +114,7 @@ class ProductForm extends React.Component{
                         </Grid>
                         <Grid item xs={12} md={4}>
                             <Field 
-                                name="qtde_produto" 
+                                name="qtdeProduto" 
                                 label="Qtde em Estoque"  
                                 type="number"
                                 component={this.renderFieldInput}  
@@ -122,7 +122,7 @@ class ProductForm extends React.Component{
                         </Grid> 
                         <Grid item xs={12} md={4}>
                             <Field 
-                                name="codigo_produto" 
+                                name="codigoProduto" 
                                 label="Cod. Produto"  
                                 type="text"
                                 component={this.renderFieldInput} 
@@ -143,7 +143,7 @@ class ProductForm extends React.Component{
                             </FormControl>
                         </Grid>                               
                     </Grid>
-                    <Grid xs={12} style={{ textAlign: 'right'}}>
+                    <Grid item xs={12} style={{ textAlign: 'right'}}>
                         <Button type="submit" variant="contained" color="primary" id="saveButton">
                             {(this.props.action === 'add' ? 'Adicionar' : 'Editar')}
                             <Icon style={{marginLeft: '5px'}}>send</Icon>
@@ -161,10 +161,10 @@ class ProductForm extends React.Component{
 const validate = (formValues) =>{
     const errors = {}
     const requiredFields = [
-        'no_produto',
+        'noProduto',
         'fabricante',
         'tipo',
-        'codigo_produto',
+        'codigoProduto',
     ]
 
     requiredFields.forEach(field => {
