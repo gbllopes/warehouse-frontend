@@ -14,6 +14,7 @@ import ProductAdd from "../pages/products/ProductAdd";
 import ProductEdit from "../pages/products/ProductEdit";
 import UsuarioCadastro from "../pages/UsuarioCadastro";
 import EmpresaCadastro from "../pages/EmpresaCadastro";
+import ReduxToastr from 'react-redux-toastr'
 
 class App extends React.Component{
 
@@ -51,6 +52,16 @@ class App extends React.Component{
               <PrivateRoute isAutenticado={this.props.isAutenticado.logado} path='/company/add' exact component={EmpresaCadastro} />
             </NavBar>
           </Switch>
+          <ReduxToastr
+            timeOut={4000}
+            newestOnTop={false}
+            preventDuplicates
+            position="top-left"
+            transitionIn="fadeIn"
+            transitionOut="fadeOut"
+            progressBar
+            closeOnToastrClick
+          />
         </Router>
       </div>
     );
