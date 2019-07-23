@@ -29,27 +29,6 @@ class ProductAdd extends React.Component{
         },
     ];
 
-    obj = [
-        {
-            nome: "Sabao pra pele",
-            fabricante: "GO",
-            qtdeEmEstoque: "20",
-            codProduto: "303232",
-            setor: "5646",
-            ex: "",
-            ex2: ""
-        },
-        {
-            nome: "Sabao pra pele",
-            fabricante: "GO",
-            qtdeEmEstoque: "20",
-            codProduto: "303232",
-            setor: "5646",
-            ex: "",
-            ex2: ""
-        }
-    ];
-
    renderProductList = products =>{
       return products.map((product, index) =>{
          return (
@@ -70,7 +49,7 @@ class ProductAdd extends React.Component{
             <Box boxShadow={5}>
                <Grid>
                   {this.renderProductList(this.props.products)}
-                   <TablePageable data={this.props.products} columns={this.colunas} />
+                   <TablePageable data={this.props.products} columns={this.colunas} action={[]} />
                </Grid>
             </Box>
          </Container>

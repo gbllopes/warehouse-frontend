@@ -4,13 +4,13 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
 
 
 export class TablePageable extends React.Component {
-
+    state = {actions: null}
     componentDidMount(){
-        console.log(this.props)
+        console.log("PROPS", this.props);
+        this.verifyActions();
     }
 
     renderHeader = () => {
@@ -21,6 +21,19 @@ export class TablePageable extends React.Component {
                 </TableCell>
             );
         });
+    }
+
+    verifyActions = () => {
+        if(this.props.actions !== null){
+            this.props.columns.push({tittle: 'Ações'})
+            this.setState({actions: {}})
+        }
+    }
+
+    renderActions = () => {
+        return(
+            <div></div>
+        )
     }
 
     renderBody = () => {
@@ -35,7 +48,9 @@ export class TablePageable extends React.Component {
                                         if(dados[columns.atributo]){
                                             return <TableCell key={index + 0}> {dados[columns.atributo]} </TableCell>
                                         }
+                                        return "";
                                     })}
+
                                 </TableRow>
                             )
                         })
@@ -45,14 +60,9 @@ export class TablePageable extends React.Component {
         }
     }
 
-    verifyActions = () => {
-        if(this.props.actions !== null){
-            this.props.columns.push({tittle: 'Ações'})
-        }
-    }
 
     render() {
-
+        console.log("RENDER", this.props.columns);
         return (
             <div>
                 <Table>
