@@ -230,6 +230,7 @@ const validate = values => {
     const requiredFields = [
     'noResponsavel',
     'cargo',
+    'dataNascimentoResponsavel'
     ];
     const userFields = [
         'email',
