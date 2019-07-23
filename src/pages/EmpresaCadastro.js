@@ -10,7 +10,7 @@ import FormControl from '@material-ui/core/FormControl'
 import { TextField } from '@material-ui/core';
 import { Container } from '@material-ui/core';
 import { FormHelperText } from "@material-ui/core";
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import { addCompany } from '../actions/company';
 import '../css/Form.css';
@@ -27,9 +27,10 @@ class EmpresaCadastro extends React.Component{
         })  
         this.setState({empresaCadastrada: response.empresa}); 
     }
-    
-    onCompanyFormSubmit = (formValues) =>{
+
+    onCompanyFormSubmit = (formValues,e) =>{
         this.props.addCompany(formValues);
+        toastr.success("Sucesso","Sua empresa foi cadastrada.")
     }
 
     renderFieldInput = ({
@@ -71,7 +72,7 @@ class EmpresaCadastro extends React.Component{
                         <Typography variant="h6" gutterBottom>
                             Cadastro de Empresa
                         </Typography>
-                        <form id="formContent" autoComplete="off" noValidate onSubmit={this.props.handleSubmit(this.onCompanyFormSubmit)}>
+                        <form id="formContent" autoComplete="off" noValidate onSubmit={this.props.handleSubmit(this.onCompanyFormSubmit)} ref="form">
                             <Grid container spacing={3} id="cardContent">      
                                 <Grid item xs={12} sm={12} >
                                     <Field 
@@ -134,6 +135,8 @@ class EmpresaCadastro extends React.Component{
     }
 }
 
+const afterSubmitSuccess = (result, dispatch) => dispatch(reset('companyForm'));
+
 const validate = formValues =>{
     const errors = [];
     const requiredFields = [
@@ -142,7 +145,6 @@ const validate = formValues =>{
         'nrCnpjEmpresa',
         'telefoneEmpresa',
         'dataFundacaoEmpresa',
-        'emailEmpresa'
     ]
 
     requiredFields.forEach(field =>{
@@ -151,11 +153,19 @@ const validate = formValues =>{
         }
     })
 
+    if(!formValues.emailEmpresa){
+        errors.emailEmpresa = "Campo Obrigatório";
+    }else if (
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formValues.emailEmpresa)
+    ) {
+        errors.emailEmpresa = "Insira um endereço de email válido";
+    }
 
     return errors;
 }
 
 export default reduxForm({
     form:'companyForm',
-    validate
+    validate,
+    onSubmitSuccess: afterSubmitSuccess
 })(connect(null, { addCompany })(EmpresaCadastro));
