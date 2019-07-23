@@ -13,6 +13,8 @@ import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import Button from '@material-ui/core/Button';
+import {connect} from 'react-redux';
+import {toastr} from 'react-redux-toastr'
 
 import {rest} from '../authentication/tokenConfig'
 
@@ -35,6 +37,7 @@ const useStyle = theme => ({
                     '0px 3px 4px 0px, rgba(0, 0, 0, 0.12) 0px 3px 3px -2px;',
     }
 });
+
 class UserForm extends React.Component {
 
     state = {cargo: []}
@@ -46,7 +49,6 @@ class UserForm extends React.Component {
     }
 
     renderInput(campo) {
-        console.log(campo);
         return (
             <div>
                 <TextField
@@ -65,7 +67,6 @@ class UserForm extends React.Component {
            </div>
         )
     }
-
 
     renderSelectField = ({
         input,
@@ -98,11 +99,19 @@ class UserForm extends React.Component {
         )
     }
 
+    onSubmit = (form) =>{
+         rest("").post("/responsavel", form).then(response => {
+            this.props.reset();
+            toastr.success("Responsavel Cadastrado com sucesso!", "");
+         }).catch(error => error);
+    }
+
     render() {
+        console.log("INITIAL ", this.props);
         const { classes } = this.props;
         return (
         <div className={classes.div}>
-            <form noValidate className={classes.form} onSubmit={this.props.handleSubmit(this.props.onSubmit)}>
+            <form noValidate className={classes.form} onSubmit={this.props.handleSubmit(this.onSubmit)}>
             <Container className={classes.root}>
                 <Card className={classes.card}>
                     <Container>
@@ -121,7 +130,7 @@ class UserForm extends React.Component {
                                                 />
                                         </FormControl>
                                     </Grid>
-                                    <Grid item xs={12}>
+                                    <Grid item xs={8}>
                                         <FormControl className={classes.textField}>
                                             <Field
                                                 name="usuario.email"
@@ -129,6 +138,18 @@ class UserForm extends React.Component {
                                                 component={this.renderInput}
                                                 required={true}
                                                 type="text"
+                                                fullWidth
+                                                />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={4}>
+                                        <FormControl className={classes.textField}>
+                                            <Field
+                                                name="dataNascimentoResponsavel"
+                                                label="Data de Nascimento"
+                                                component={this.renderInput}
+                                                required={true}
+                                                type="date"
                                                 fullWidth
                                                 />
                                         </FormControl>
@@ -158,11 +179,12 @@ class UserForm extends React.Component {
                                     <Grid item xs={6}>
                                         <FormControl className={classes.textField}>
                                             <Field
-                                                name="empresa"
+                                                name="empresa.noRazaoSocial"
                                                 label="Empresa"
                                                 component={this.renderInput}
                                                 required={true}
                                                 type="text"
+                                                disabled={true}
                                                 />
                                         </FormControl>
                                     </Grid>
@@ -203,20 +225,24 @@ class UserForm extends React.Component {
   }
 }
 
+
 const validate = values => {
     const requiredFields = [
     'noResponsavel',
     'cargo',
-    'empresa'
     ];
     const userFields = [
         'email',
         'secret',
         'secretConfirm'
     ]
+
     const errors = {};
     errors.usuario = {}
+    errors.empresa = {}
     values.usuario = !values.usuario ? {}: values.usuario;
+    values.empresa = !values.empresa ? {}: values.empresa;
+
     requiredFields.forEach( field => {
         if(!values[field]){
             errors[field] = "Campo de preenchimento obrigatório";
@@ -229,18 +255,21 @@ const validate = values => {
         }
     })
 
+    if(!values.empresa.noRazaoSocial){
+        errors.empresa.noRazaoSocial = "Campo de preenchimento obrigatório";
+    }
+
     if(values.usuario.secret && values.usuario.secretConfirm){
         if(values.usuario.secret !== values.usuario.secretConfirm){
             errors.usuario.secretConfirm = "As senhas informadas não coincidem"
         }
     }
 
-
-    console.log(values);
     return errors;
 }
 
 export default reduxForm({
   form: "userRegister",
-  validate
-})(withStyles(useStyle)(UserForm));
+  validate,
+  enableReinitialize: true
+})(connect(null, null)(withStyles(useStyle)(UserForm)));

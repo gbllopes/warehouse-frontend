@@ -3,19 +3,20 @@ import UserForm from "../components/UserForm";
 import { rest } from "../authentication/tokenConfig";
 
 class UsuarioCadastro extends React.Component {
-    onSubmit = (form) =>{
-        console.log("CHEGOU", form)
-        form.empresa = {}
-        form.empresa.idEmpresa = 1;
-        form.dataNascimentoResponsavel = new Date();
-        rest("").post("/responsavel", form);
+    state = {empresa: null}
 
+    componentDidMount = async () =>{
+        const response = await rest("").get("/responsavel");
+        this.setState({empresa: response.data.empresa});
+    }
+    onSubmit = (form) =>{
+        rest("").post("/responsavel", form);
     }
 
     render() {
         return (
             <div>
-                <UserForm onSubmit={this.onSubmit}/>
+                <UserForm onSubmit={this.onSubmit} initialValues={{empresa: this.state.empresa}}/>
             </div>
         );
     }

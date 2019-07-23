@@ -53,7 +53,7 @@ class App extends React.Component{
             </NavBar>
           </Switch>
           <ReduxToastr
-            timeOut={4000}
+            timeOut={6000}
             newestOnTop={false}
             preventDuplicates
             position="top-right"
