@@ -49,7 +49,7 @@ class ProductAdd extends React.Component{
             <Box boxShadow={5}>
                <Grid>
                   {this.renderProductList(this.props.products)}
-                   <TablePageable data={this.props.products} columns={this.colunas} action={[]} />
+                   <TablePageable data={this.props.products} columns={this.colunas} actions={[]} />
                </Grid>
             </Box>
          </Container>
