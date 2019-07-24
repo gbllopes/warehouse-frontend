@@ -53,9 +53,11 @@ export class TablePageable extends React.Component {
     renderActions = () => {
         return(
             <>
-                <IconButton style={{backgroundColor: 'white'}}>
-                    <Icon>settings</Icon>
-                </IconButton>
+                <TableCell>
+                    <IconButton style={{backgroundColor: 'white'}}>
+                        <Icon>settings</Icon>
+                    </IconButton>
+                </TableCell>
             </>
         )
     }
