@@ -4,10 +4,30 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import Paper from '@material-ui/core/Paper';
+import TablePagination from '@material-ui/core/TablePagination';
+import Icon from '@material-ui/core/Icon';
+import IconButton from '@material-ui/core/IconButton';
+// import Menu from '@material-ui/core/Menu';
+// import MenuItem from '@material-ui/core/MenuItem';
 
+
+/**
+ * @version v1.0.0
+ *
+ * @example
+ * must be mandatory attributes of type data and columns
+ *
+ * <TablePageable data=[] columns=[] actions=[]></TablePageable>
+ *
+ *
+ */
 
 export class TablePageable extends React.Component {
     state = {actions: null}
+
+
+
     componentDidMount(){
         console.log("PROPS", this.props);
         this.verifyActions();
@@ -24,7 +44,7 @@ export class TablePageable extends React.Component {
     }
 
     verifyActions = () => {
-        if(this.props.actions !== null){
+        if(this.props.actions && this.props.actions !== undefined){
             this.props.columns.push({tittle: 'Ações'})
             this.setState({actions: {}})
         }
@@ -32,7 +52,11 @@ export class TablePageable extends React.Component {
 
     renderActions = () => {
         return(
-            <div></div>
+            <>
+                <IconButton style={{backgroundColor: 'white'}}>
+                    <Icon>settings</Icon>
+                </IconButton>
+            </>
         )
     }
 
@@ -48,9 +72,10 @@ export class TablePageable extends React.Component {
                                         if(dados[columns.atributo]){
                                             return <TableCell key={index + 0}> {dados[columns.atributo]} </TableCell>
                                         }
-                                        return "";
                                     })}
-
+                                    {
+                                        this.props.actions && this.renderActions()
+                                    }
                                 </TableRow>
                             )
                         })
@@ -62,19 +87,35 @@ export class TablePageable extends React.Component {
 
 
     render() {
-        console.log("RENDER", this.props.columns);
         return (
             <div>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            {this.renderHeader()}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {this.renderBody()}
-                    </TableBody >
-                </Table>
+                <Paper>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                {this.renderHeader()}
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {this.renderBody()}
+                        </TableBody >
+                    </Table>
+                    <TablePagination
+                        rowsPerPageOptions={[5, 10, 25]}
+                        component="div"
+                        count={10}
+                        page={0}
+                        rowsPerPage={5}
+                        backIconButtonProps={{
+                            'aria-label': 'Previous Page',
+                        }}
+                        nextIconButtonProps={{
+                            'aria-label': 'Next Page',
+                        }}
+                        onChangePage={() => ""}
+                        onChangeRowsPerPage={() => ""}
+                        />
+                </Paper>
             </div>
         );
     }
