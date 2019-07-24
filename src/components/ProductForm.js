@@ -12,17 +12,18 @@ import {rest} from '../authentication/tokenConfig';
 import Typography from '@material-ui/core/Typography';
 
 import { TextField } from '@material-ui/core';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, reset } from 'redux-form';
 import { Container } from '@material-ui/core';
+import { toastr } from 'react-redux-toastr';
 import '../css/Form.css'
 
 
 class ProductForm extends React.Component{
-    state = { setores : [] };
+    state = { setores : [] , setoresPhp : []};
     componentDidMount(){
         rest("").get("/setor").then(response => {
             this.setState({ setores: response.data});
-        })   
+        })
     }
 
     renderSelectInput = ({
@@ -43,7 +44,7 @@ class ProductForm extends React.Component{
                     id: 'age-native-simple'
                 }}
                 placeholder={placeholder}
-                error={touched && error}
+                error={touched && error != null}
                 required
                >
                    {children}
@@ -86,9 +87,11 @@ class ProductForm extends React.Component{
 
     myFormSubmit = (formValues) =>{
         this.props.onSubmit(formValues);
+        toastr.success("Sucesso", "Ação realizada com sucesso");
     }
 
     render(){
+
         return (
             <Container fixed >
             <Box boxShadow={3} id="container" pt={3}>
@@ -136,7 +139,7 @@ class ProductForm extends React.Component{
                                     component={this.renderSelectInput}
                                     placeholder="Setor do Produto"
                                 >
-                                    {this.state.setores.map((setor) =>{
+                                    {this.state.setores.map(setor =>{
                                         return  <MenuItem key={setor.idSetor} value={setor}>{setor.dsSetor}</MenuItem>
                                     })}
                                 </Field>
@@ -186,7 +189,10 @@ const validate = (formValues) =>{
     return errors;
 }
 
+const afterSubmitSuccess = (result, dispatch) => (dispatch(reset('productForm')));
+
 export default reduxForm({
     form: 'productForm',
-    validate
+    validate,
+    onSubmitSuccess: afterSubmitSuccess
 })(ProductForm)
