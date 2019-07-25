@@ -19,9 +19,9 @@ import '../css/Form.css'
 
 
 class ProductForm extends React.Component{
-    state = { setores : [] , setoresPhp : []};
-    componentDidMount(){
-        rest("").get("/setor").then(response => {
+    state = { setores : [] , empresa: {}};
+    async componentDidMount(){
+        await rest("").get("/setor").then(response => {
             this.setState({ setores: response.data});
         })
     }
@@ -85,13 +85,12 @@ class ProductForm extends React.Component{
         
     }
 
-    myFormSubmit = (formValues) =>{
-        this.props.onSubmit(formValues);
+    myFormSubmit = (form) =>{
+        this.props.onSubmit(form);
         toastr.success("Sucesso", "Ação realizada com sucesso");
     }
 
     render(){
-
         return (
             <Container fixed >
             <Box boxShadow={3} id="container" pt={3}>
@@ -101,14 +100,14 @@ class ProductForm extends React.Component{
                 </Typography>
                 <form id="formContent" autoComplete="off" noValidate onSubmit={this.props.handleSubmit(this.myFormSubmit)}>
                     <Grid container spacing={3} id="cardContent">      
-                        <Grid item xs={12} md={6} >
+                        <Grid item xs={12} md={4} >
                             <Field 
                                 name="noProduto" 
                                 label="Nome" 
                                 component={this.renderFieldInput}  
                             />
                         </Grid>
-                        <Grid item xs={12} md={6}>
+                        <Grid item xs={12} md={4}>
                             <Field 
                                 name="fabricante" 
                                 label="Fabricante" 
@@ -118,10 +117,19 @@ class ProductForm extends React.Component{
                         <Grid item xs={12} md={4}>
                             <Field 
                                 name="qtdeProduto" 
-                                label="Qtde em Estoque"  
-                                type="number"
+                                label="Qtde em Estoque" 
+                                type="number" 
                                 component={this.renderFieldInput}  
                             />
+                        </Grid> 
+                        <Grid item xs={12} md={4}>
+                            <Field 
+                                name="empresa.noRazaoSocial" 
+                                label="Empresa"  
+                                type="text"
+                                disabled
+                                component={this.renderFieldInput} 
+                            />   
                         </Grid> 
                         <Grid item xs={12} md={4}>
                             <Field 
@@ -163,6 +171,7 @@ class ProductForm extends React.Component{
 
 const validate = (formValues) =>{
     const errors = {}
+    formValues.empresa = !formValues.empresa ? {}: formValues.empresa;
     const requiredFields = [
         'noProduto',
         'fabricante',
@@ -175,15 +184,15 @@ const validate = (formValues) =>{
             errors[field] = 'Campo Obrigatório';
         }
     })
-
+    
     if(!formValues.setor){
         errors.setor = "Campo Obrigatório";
     }
 
-    if(!formValues.qtde_produto){
-        errors.qtde_produto = "Campo Obrigatório"
-    }else if (isNaN(Number(formValues.qtde_produto))){
-        errors.qtde_produto = "Somente números são aceitos";
+    if(!formValues.qtdeProduto){
+        errors.qtdeProduto = "Campo Obrigatório"
+    }else if (isNaN(Number(formValues.qtdeProduto))){
+        errors.qtdeProduto = "Somente números são aceitos";
     }
 
     return errors;
@@ -194,5 +203,6 @@ const afterSubmitSuccess = (result, dispatch) => (dispatch(reset('productForm'))
 export default reduxForm({
     form: 'productForm',
     validate,
-    onSubmitSuccess: afterSubmitSuccess
+    onSubmitSuccess: afterSubmitSuccess,
+    enableReinitialize :true
 })(ProductForm)

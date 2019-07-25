@@ -1,9 +1,9 @@
 import { ADD_COMPANY } from '../constants/company';
 
-export default (state = {}, action) => {
+export default (state = {msg: null}, action) => {
     switch(action){
         case ADD_COMPANY:
-            return {...state, empresa: action.payload};
+            return {...state, msg: action.payload};
         default:
             return state;
     }
