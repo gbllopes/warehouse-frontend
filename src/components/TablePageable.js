@@ -75,9 +75,7 @@ export class TablePageable extends React.Component {
                                             return <TableCell key={index + 0}> {dados[columns.atributo]} </TableCell>
                                         }
                                     })}
-                                    {
-                                        this.props.actions && this.renderActions()
-                                    }
+                                    {this.props.actions && this.renderActions()}
                                 </TableRow>
                             )
                         })
