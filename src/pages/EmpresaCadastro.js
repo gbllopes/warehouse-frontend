@@ -15,11 +15,12 @@ import { connect } from 'react-redux';
 import { addCompany } from '../actions/company';
 import '../css/Form.css';
 import { rest } from '../authentication/tokenConfig';
-import {toastr} from 'react-redux-toastr'
+import {toastr} from 'react-redux-toastr';
 
 class EmpresaCadastro extends React.Component{
 
     state = { empresaCadastrada: null };
+
 
     async componentDidMount(){
         const response = await rest("").get("/responsavel").then(response => {
@@ -31,6 +32,10 @@ class EmpresaCadastro extends React.Component{
     onCompanyFormSubmit = (formValues,e) =>{
         this.props.addCompany(formValues);
         toastr.success("Sucesso","Sua empresa foi cadastrada.")
+    }
+
+    onChangeCnpj = (value) =>{
+        console.log(this.props.validarCnpj(value))
     }
 
     renderFieldInput = ({
@@ -54,13 +59,14 @@ class EmpresaCadastro extends React.Component{
             
           /> 
          <FormControl>
-            { touched && error && <FormHelperText>{error}</FormHelperText>}  
+            { touched && error && <FormHelperText error>{error}</FormHelperText>}  
          </FormControl>
           </>
         );
     }
+
     render(){
-        if(this.state.empresaCadastrada){
+        if(!this.state.empresaCadastrada){
             return(
                 toastr.error('Erro', 'Empresa já está cadastrada')    
             );
@@ -142,19 +148,18 @@ const validate = formValues =>{
     const requiredFields = [
         'noRazaoSocial',
         'siglaEmpresa',
-        'nrCnpjEmpresa',
         'telefoneEmpresa',
         'dataFundacaoEmpresa',
-    ]
-
+        'nrCnpjEmpresa'
+    ];
     requiredFields.forEach(field =>{
         if(!formValues[field]){
-            errors[field] = "Campo Obrigatório";
+            errors[field] = "Campo de preenchimento obrigatório";
         }
     })
 
     if(!formValues.emailEmpresa){
-        errors.emailEmpresa = "Campo Obrigatório";
+        errors.emailEmpresa = "Campo de preenchimento obrigatório";
     }else if (
         !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formValues.emailEmpresa)
     ) {

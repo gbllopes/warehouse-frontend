@@ -8,13 +8,12 @@ export const productsCurrentAdd = (formValues) => dispatch =>{
 
 export const produtcsAdd = (form) => async dispatch =>{
     try{
-        const response = await rest('').post('/products', form);
-        if(response.status === 201){
-            dispatch({ type: PRODUCT_ADD, msg: 'Produto(s) adicionado(s) com sucesso'});
-        }
+        const response = await rest('').post('/products', form)
+        dispatch({ type: PRODUCT_ADD, payload: response.status});
     }catch(e){
-        dispatch({ type : PRODUCT_ADD, msg: 'Erro ao adicionar produtos'});
+        dispatch({ type: PRODUCT_ADD, payload: 500});
     }
+    
 }
 
 export const cleanProducts = () => dispatch =>{

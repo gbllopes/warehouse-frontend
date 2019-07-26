@@ -29,7 +29,6 @@ export class TablePageable extends React.Component {
 
 
     componentDidMount(){
-        console.log("PROPS", this.props);
         this.verifyActions();
     }
 

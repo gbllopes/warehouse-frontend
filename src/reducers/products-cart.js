@@ -6,7 +6,7 @@ export default (state = [], action) =>{
         case CURRENT_ADD:
             return [...state, action.payload ]
         case CLEAN_PRODUCTS:
-            return state = [];
+            return state = [];    
         default: 
             return state;    
     }
