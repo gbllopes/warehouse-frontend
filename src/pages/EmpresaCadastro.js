@@ -6,7 +6,7 @@ import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl'
 
-
+import * as cnpj from "@fnando/cnpj"; 
 import { TextField } from '@material-ui/core';
 import { Container } from '@material-ui/core';
 import { FormHelperText } from "@material-ui/core";
@@ -66,7 +66,7 @@ class EmpresaCadastro extends React.Component{
     }
 
     render(){
-        if(!this.state.empresaCadastrada){
+        if(this.state.empresaCadastrada){
             return(
                 toastr.error('Erro', 'Empresa já está cadastrada')    
             );
@@ -166,7 +166,14 @@ const validate = formValues =>{
         errors.emailEmpresa = "Insira um endereço de email válido";
     }
 
+    if(!formValues.nrCnpjEmpresa){
+        errors.nrCnpjEmpresa = "Campo de preenchimento obrigatório"
+    }else if (!cnpj.isValid(formValues.nrCnpjEmpresa)){
+        errors.nrCnpjEmpresa = "Insira um CNPJ válido";
+    }
+
     return errors;
+    
 }
 
 export default reduxForm({
