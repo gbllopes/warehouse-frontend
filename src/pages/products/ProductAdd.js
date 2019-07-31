@@ -18,7 +18,7 @@ class ProductAdd extends React.Component{
 
    state = { empresa: null}
    async componentDidMount(){
-      await rest('').get('/responsavel').then(response =>{
+      await rest('').get('/responsavel/logado').then(response =>{
          this.setState({ empresa : response.data.empresa})
       })
    }

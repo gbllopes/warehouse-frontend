@@ -6,7 +6,7 @@ class UsuarioCadastro extends React.Component {
     state = {empresa: null}
 
     componentDidMount = async () =>{
-        const response = await rest("").get("/responsavel");
+        const response = await rest("").get("/responsavel/logado");
         this.setState({empresa: response.data.empresa});
     }
     onSubmit = (form) =>{
