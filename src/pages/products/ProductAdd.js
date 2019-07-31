@@ -12,6 +12,7 @@ import { productsCurrentAdd, produtcsAdd, cleanProducts } from '../../actions/pr
 import { Container } from '@material-ui/core';
 import TablePageable from '../../components/TablePageable';
 import '../../css/Form.css';
+import { create } from 'jss';
 
 class ProductAdd extends React.Component{
 
@@ -20,7 +21,7 @@ class ProductAdd extends React.Component{
       await rest('').get('/responsavel').then(response =>{
          this.setState({ empresa : response.data.empresa})
       })
-   }  
+   }
 
     colunas = [
         {
@@ -41,6 +42,14 @@ class ProductAdd extends React.Component{
         },
     ];
 
+    actions = [
+        {
+            tittle: 'Editar',
+            icon: 'create',
+            callback: (item) => console.log(item)
+        }
+    ]
+
    async onSubmitSuccess(products){
       await this.props.produtcsAdd(products).then(()=>{
          if(this.props.products.status === 200){
@@ -54,11 +63,11 @@ class ProductAdd extends React.Component{
 
    renderButtonSubmit(){
       return (
-         <Button 
-            disabled={this.props.productsCart < 1 ? true : false} 
-            type="submit" 
-            variant="contained" 
-            color="primary" 
+         <Button
+            disabled={this.props.productsCart < 1 ? true : false}
+            type="submit"
+            variant="contained"
+            color="primary"
             id="saveButton"
             onClick={()=> this.onSubmitSuccess(this.props.productsCart)}
             >
@@ -67,10 +76,10 @@ class ProductAdd extends React.Component{
          </Button>
       );
    }
-   
+
    renderProductList = productsCart =>{
          return (
-            <TablePageable data={productsCart} columns={this.colunas} actions={[]} />
+            <TablePageable data={productsCart} columns={this.colunas} actions={this.actions} />
          );
    }
    onSubmitToTable = (values) =>{
@@ -84,7 +93,7 @@ class ProductAdd extends React.Component{
          <Container fixed>
             <Box boxShadow={5}>
                <Grid>
-                  {this.renderProductList(this.props.productsCart)}   
+                  {this.renderProductList(this.props.productsCart)}
                </Grid>
             </Box>
             {this.renderButtonSubmit()}
@@ -101,8 +110,8 @@ const mapStateToProps = (state) =>{
       productsCart: state.productsCart
    }
 }
-export default connect(mapStateToProps, 
-   { 
+export default connect(mapStateToProps,
+   {
      productsCurrentAdd,
      produtcsAdd,
      cleanProducts,

@@ -20,13 +20,24 @@ import ListItemText from '@material-ui/core/ListItemText';
  * @example
  * must be mandatory attributes of type data and columns
  *
- * <TablePageable data=[] columns=[] actions=[]></TablePageable>
+ * @example
+ *
+ * function callBack(item,index){
+ *  console.log("example");
+ * }
+ *
+ * @example
+ * const actions = [
+ *  {tittle: "Editar", icon: 'create', callback: callBack},
+ * ];
+ *
+ * <TablePageable data=[] columns=[] actions={actions} api={}></TablePageable>
  *
  *
  */
 
 export class TablePageable extends React.Component {
-    state = {actions: null, anchorEl: null}
+    state = {actions: null, anchorEl: null, api: {list: this.props.data}}
 
 
 
@@ -51,7 +62,7 @@ export class TablePageable extends React.Component {
         }
     }
 
-    renderActions = () => {
+    renderActions = (item, index) => {
         return(
             <>
                 <TableCell>
@@ -66,10 +77,12 @@ export class TablePageable extends React.Component {
                             open={Boolean(this.state.anchorEl)}
                             onClose={() => this.setState({anchorEl: null})}
                             >
-                            <MenuItem onClick={() => ''}>
-                                <ListItemIcon><Icon>create</Icon></ListItemIcon>
-                                <ListItemText primary="Edit"></ListItemText>
-                            </MenuItem>
+                           {this.props.actions.map((action, index)=> (
+                               <MenuItem onClick={() =>{action.callback(item);this.setState({anchorEl: null})}} key={index}>
+                                   {action.icon && action.icon !== undefined && <ListItemIcon><Icon>{action.icon}</Icon></ListItemIcon>}
+                                   <ListItemText primary={action.tittle}></ListItemText>
+                               </MenuItem>
+                           ))}
                         </Menu>
                     </Paper>
                 </TableCell>
@@ -82,15 +95,15 @@ export class TablePageable extends React.Component {
             return (
                 <>
                     {
-                        this.props.data.map((dados, index) => {
+                        this.props.data.map((item, index) => {
                             return(
                                 <TableRow key={index}>
                                     {this.props.columns.map((columns, index) => {
-                                        if(dados[columns.atributo]){
-                                            return <TableCell key={index + 0}> {dados[columns.atributo]} </TableCell>
+                                        if(item[columns.atributo]){
+                                            return <TableCell key={index}> {item[columns.atributo]} </TableCell>
                                         }
                                     })}
-                                    {this.props.actions && this.renderActions()}
+                                    {this.props.actions && this.renderActions(item, index)}
                                 </TableRow>
                             )
                         })
