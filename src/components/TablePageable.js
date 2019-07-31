@@ -8,8 +8,10 @@ import Paper from '@material-ui/core/Paper';
 import TablePagination from '@material-ui/core/TablePagination';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
-// import Menu from '@material-ui/core/Menu';
-// import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 
 
 /**
@@ -24,7 +26,7 @@ import IconButton from '@material-ui/core/IconButton';
  */
 
 export class TablePageable extends React.Component {
-    state = {actions: null}
+    state = {actions: null, anchorEl: null}
 
 
 
@@ -53,9 +55,23 @@ export class TablePageable extends React.Component {
         return(
             <>
                 <TableCell>
-                    <IconButton style={{backgroundColor: 'white'}}>
+                    <IconButton style={{backgroundColor: 'white'}} onClick={(event)=> this.setState({anchorEl: event.currentTarget})}>
                         <Icon>settings</Icon>
                     </IconButton>
+                    <Paper>
+                        <Menu
+                            id="simple-menu"
+                            keepMounted
+                            anchorEl={this.state.anchorEl}
+                            open={Boolean(this.state.anchorEl)}
+                            onClose={() => this.setState({anchorEl: null})}
+                            >
+                            <MenuItem onClick={() => ''}>
+                                <ListItemIcon><Icon>create</Icon></ListItemIcon>
+                                <ListItemText primary="Edit"></ListItemText>
+                            </MenuItem>
+                        </Menu>
+                    </Paper>
                 </TableCell>
             </>
         )
