@@ -40,6 +40,10 @@ class ProductAdd extends React.Component{
             tittle: "Cod. Produto",
             atributo: "codigoProduto"
         },
+        {
+            tittle: "Setor",
+            atributo: "setor.dsSetor"
+        }
     ];
 
     actions = [

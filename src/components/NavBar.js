@@ -26,6 +26,7 @@ import Domain from '@material-ui/icons/Domain';
 import AddCircle from '@material-ui/icons/AddCircle'
 import Assignment from "@material-ui/icons/Assignment";
 import Build from '@material-ui/icons/Build'
+import VpnKey from '@material-ui/icons/VpnKey'
 
 import {tokenDecode} from '../authentication/oauthHandler'
 
@@ -132,6 +133,14 @@ export default function NavBar(props) {
                                         <AddCircle />
                                     </ListItemIcon>
                                     <ListItemText primary="Cadastrar Usuario" />
+                                </ListItem>
+                            </NavLink>
+                            <NavLink to="/user/permission" style={{color: '#696f78', textDecoration: 'none'}} activeClassName={classes.routeActive}>
+                                <ListItem button className={classes.nested}>
+                                    <ListItemIcon>
+                                        <VpnKey />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Controle de Usuario" />
                                 </ListItem>
                             </NavLink>
                         </List>

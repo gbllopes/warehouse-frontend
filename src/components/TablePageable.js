@@ -12,6 +12,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import _ from 'lodash';
 
 
 /**
@@ -99,8 +100,8 @@ export class TablePageable extends React.Component {
                             return(
                                 <TableRow key={index}>
                                     {this.props.columns.map((columns, index) => {
-                                        if(item[columns.atributo]){
-                                            return <TableCell key={index}> {item[columns.atributo]} </TableCell>
+                                        if(_.get(item, columns.atributo)){
+                                            return <TableCell key={index}> {_.get(item, columns.atributo)} </TableCell>
                                         }
                                     })}
                                     {this.props.actions && this.renderActions(item, index)}
