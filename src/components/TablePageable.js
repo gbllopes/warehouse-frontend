@@ -21,18 +21,26 @@ import _ from 'lodash';
  * @example
  * must be mandatory attributes of type data and columns
  *
- * @example
  *
- * function callBack(item,index){
+ * @function callBack(item,index){
  *  console.log("example");
  * }
  *
  * @example
+ * @example
  * const actions = [
  *  {tittle: "Editar", icon: 'create', callback: callBack},
+ *  {tittle: "Excluir" icon: 'delete_forever' callBack : callBack}
  * ];
  *
- * <TablePageable data=[] columns=[] actions={actions} api={}></TablePageable>
+ * @param {array} data
+ * @param {array} columns
+ * @param {array} action
+ * @param {object} api
+ *
+ * @example
+ * <TablePageable data=[] columns=[] action=[] api={}></TablePageable>
+ *
  *
  *
  */
