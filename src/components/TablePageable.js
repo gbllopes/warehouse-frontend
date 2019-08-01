@@ -6,13 +6,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from '@material-ui/core/Paper';
 import TablePagination from '@material-ui/core/TablePagination';
-import Icon from '@material-ui/core/Icon';
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import _ from 'lodash';
+import MenuActionTable from '../components/MenuActionTable'
 
 
 /**
@@ -74,30 +69,11 @@ export class TablePageable extends React.Component {
     renderActions = (item, index) => {
         return(
             <>
-                <TableCell>
-                    <IconButton style={{backgroundColor: 'white'}} onClick={(event)=> this.setState({anchorEl: event.currentTarget})}>
-                        <Icon>settings</Icon>
-                    </IconButton>
-                    <Paper>
-                        <Menu
-                            id="simple-menu"
-                            keepMounted
-                            anchorEl={this.state.anchorEl}
-                            open={Boolean(this.state.anchorEl)}
-                            onClose={() => this.setState({anchorEl: null})}
-                            >
-                           {this.props.actions.map((action, index)=> (
-                               <MenuItem onClick={() =>{action.callback(item);this.setState({anchorEl: null})}} key={index}>
-                                   {action.icon && action.icon !== undefined && <ListItemIcon><Icon>{action.icon}</Icon></ListItemIcon>}
-                                   <ListItemText primary={action.tittle}></ListItemText>
-                               </MenuItem>
-                           ))}
-                        </Menu>
-                    </Paper>
-                </TableCell>
+                <MenuActionTable item={item} index={index} actions={this.props.actions} />
             </>
         )
     }
+
 
     renderBody = () => {
         if(this.props.data.length > 0 ){
@@ -111,7 +87,6 @@ export class TablePageable extends React.Component {
                                         if(_.get(item, columns.atributo)){
                                             return <TableCell key={index}> {_.get(item, columns.atributo)} </TableCell>
                                         }
-                                        return <TableCell key={index}></TableCell>
                                     })}
                                     {this.props.actions && this.renderActions(item, index)}
                                 </TableRow>
