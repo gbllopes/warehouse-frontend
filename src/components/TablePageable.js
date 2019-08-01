@@ -103,6 +103,7 @@ export class TablePageable extends React.Component {
                                         if(_.get(item, columns.atributo)){
                                             return <TableCell key={index}> {_.get(item, columns.atributo)} </TableCell>
                                         }
+                                        return <TableCell key={index}></TableCell>
                                     })}
                                     {this.props.actions && this.renderActions(item, index)}
                                 </TableRow>

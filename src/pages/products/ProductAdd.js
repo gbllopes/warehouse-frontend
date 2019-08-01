@@ -12,7 +12,6 @@ import { productsCurrentAdd, produtcsAdd, cleanProducts } from '../../actions/pr
 import { Container } from '@material-ui/core';
 import TablePageable from '../../components/TablePageable';
 import '../../css/Form.css';
-import { create } from 'jss';
 
 class ProductAdd extends React.Component{
 
