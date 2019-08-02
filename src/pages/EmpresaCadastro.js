@@ -19,7 +19,7 @@ import {toastr} from 'react-redux-toastr';
 
 class EmpresaCadastro extends React.Component{
 
-    state = { empresaCadastrada: null };
+    state = { empresaCadastrada: null , cnpjEmpresa: null};
 
 
     async componentDidMount(){
@@ -30,12 +30,9 @@ class EmpresaCadastro extends React.Component{
     }
 
     onCompanyFormSubmit = (formValues,e) =>{
+        formValues.nrCnpjEmpresa = cnpj.strip(formValues.nrCnpjEmpresa);
         this.props.addCompany(formValues);
         toastr.success("Sucesso","Sua empresa foi cadastrada.")
-    }
-
-    onChangeCnpj = (value) =>{
-        console.log(this.props.validarCnpj(value))
     }
 
     renderFieldInput = ({
@@ -43,6 +40,7 @@ class EmpresaCadastro extends React.Component{
         label,
         placeholder,
         type,
+        value,
         meta: {touched, error},
         ...custom
     }) => {
@@ -53,6 +51,7 @@ class EmpresaCadastro extends React.Component{
             required
             fullWidth
             type={type}
+            value={value}
             error={error && touched}
             {...input}
             {...custom}
@@ -100,6 +99,7 @@ class EmpresaCadastro extends React.Component{
                                         name="nrCnpjEmpresa"
                                         label="CNPJ"
                                         component={this.renderFieldInput}
+                                        
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={4}>

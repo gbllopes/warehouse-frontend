@@ -22,9 +22,13 @@ import MenuActionTable from '../components/MenuActionTable'
  * }
  *
  * @example
+ * 
  * @example
+ * @example
+ * 
+ * 
  * const actions = [
- *  {tittle: "Editar", icon: 'create', callback: callBack},
+ *  {tittle: "Editar", icon: 'create', callBack: callBack},
  *  {tittle: "Excluir" icon: 'delete_forever' callBack : callBack}
  * ];
  *
