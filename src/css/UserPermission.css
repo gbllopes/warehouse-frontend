@@ -1,0 +1,8 @@
+.table{
+    margin-top: 5vh;
+}
+
+.formContent{
+    display: flex ;
+    flex-wrap: wrap ;
+}

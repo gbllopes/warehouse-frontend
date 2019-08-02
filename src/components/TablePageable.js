@@ -22,7 +22,6 @@ import MenuActionTable from '../components/MenuActionTable'
  * }
  *
  * @example
- * @example
  * const actions = [
  *  {tittle: "Editar", icon: 'create', callback: callBack},
  *  {tittle: "Excluir" icon: 'delete_forever' callBack : callBack}
@@ -41,6 +40,8 @@ import MenuActionTable from '../components/MenuActionTable'
  */
 
 export class TablePageable extends React.Component {
+
+
     state = {actions: null, anchorEl: null, api: {list: this.props.data}}
 
 
@@ -66,15 +67,6 @@ export class TablePageable extends React.Component {
         }
     }
 
-    renderActions = (item, index) => {
-        return(
-            <>
-                <MenuActionTable item={item} index={index} actions={this.props.actions} />
-            </>
-        )
-    }
-
-
     renderBody = () => {
         if(this.props.data.length > 0 ){
             return (
@@ -88,7 +80,7 @@ export class TablePageable extends React.Component {
                                             return <TableCell key={index}> {_.get(item, columns.atributo)} </TableCell>
                                         }
                                     })}
-                                    {this.props.actions && this.renderActions(item, index)}
+                                    {this.props.actions && <MenuActionTable item={item} index={index} actions={this.props.actions} />}
                                 </TableRow>
                             )
                         })

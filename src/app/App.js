@@ -16,6 +16,7 @@ import UsuarioCadastro from "../pages/UsuarioCadastro";
 import EmpresaCadastro from "../pages/EmpresaCadastro";
 import UsuarioPermissao from '../pages/UsuarioPermissao'
 import ReduxToastr from 'react-redux-toastr'
+import EditarPermissao from "../pages/EditarPermissao";
 
 class App extends React.Component{
 
@@ -52,6 +53,7 @@ class App extends React.Component{
               <PrivateRoute isAutenticado={this.props.isAutenticado.logado} path='/user/register' exact component={UsuarioCadastro} />
               <PrivateRoute isAutenticado={this.props.isAutenticado.logado} path='/company/add' exact component={EmpresaCadastro} />
               <PrivateRoute isAutenticado={this.props.isAutenticado.logado} path='/user/permission' exact component={UsuarioPermissao} />
+              <PrivateRoute isAutenticado={this.props.isAutenticado.logado} path='/user/permission/edit/:id' exact component={EditarPermissao} />
             </NavBar>
           </Switch>
           <ReduxToastr
