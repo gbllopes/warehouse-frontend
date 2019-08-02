@@ -1,9 +1,17 @@
 
-import { CURRENT_ADD, PRODUCT_ADD, CLEAN_PRODUCTS } from '../constants/product';
+import { CURRENT_ADD, PRODUCT_ADD, CLEAN_PRODUCTS, DELETE_FROM_CART , EDIT_FROM_CART} from '../constants/product';
 import {rest} from '../authentication/tokenConfig';
 
 export const productsCurrentAdd = (formValues) => dispatch =>{
     dispatch({ type: CURRENT_ADD , payload: formValues });
+}
+
+export const deleteFromCart = (id) => dispatch =>{
+    dispatch({ type: DELETE_FROM_CART, payload: id});
+} 
+
+export const editFromCart = (product, id) => dispatch => {
+    dispatch({ type: EDIT_FROM_CART, product, id})
 }
 
 export const produtcsAdd = (form) => async dispatch =>{
