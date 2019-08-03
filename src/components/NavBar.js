@@ -27,8 +27,10 @@ import AddCircle from '@material-ui/icons/AddCircle'
 import Assignment from "@material-ui/icons/Assignment";
 import Build from '@material-ui/icons/Build'
 import VpnKey from '@material-ui/icons/VpnKey'
+import Face from '@material-ui/icons/Face'
 
 import {tokenDecode} from '../authentication/oauthHandler'
+import { Menu, Paper } from '@material-ui/core';
 
 const drawerWidth = 240;
 
@@ -96,6 +98,9 @@ const useStyles = makeStyles(theme => ({
   },
   nested: {
       paddingLeft: theme.spacing(4)
+  },
+  menu: {
+      alignContent: 'right'
   }
 }));
 
@@ -105,6 +110,7 @@ export default function NavBar(props) {
   const [open, setOpen] = React.useState(true);
   const [menuOpen1, setMenuOpen1] = React.useState(false);
   const [menuOpen2, setMenuOpen2] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   function handleDrawerOpen() {
     setOpen(true);
@@ -224,6 +230,20 @@ export default function NavBar(props) {
           </IconButton>
           <Typography variant="h6" noWrap>
             ALMOXARIFADO
+          </Typography>
+          <Typography className={classes.menu}>
+                <IconButton  onClick={(event)=> setAnchorEl({anchorEl: event.currentTarget})} color="secondary">
+                    <Face/>
+                </IconButton>
+                <Paper>
+                    <Menu
+                        id="simple-menu"
+                        anchorEl={anchorEl}
+                        open={Boolean(anchorEl)}
+                        onClose={() => ''}
+                        >
+                    </Menu>
+                </Paper>
           </Typography>
         </Toolbar>
       </AppBar>
