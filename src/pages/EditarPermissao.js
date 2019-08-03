@@ -77,9 +77,9 @@ class EditarPermissao extends React.Component{
     render(){
         return(
             <Container fixed >
-                <Box boxShadow={3} pt={3}>
-                    <Container>
-                        <Box boxShadow={3} pt={3} id="container">
+                <Box boxShadow={3} p={3}>
+                    <Container fixed>
+                        <Box boxShadow={3} p={2} >
                             <div className="content">
                                 <h2>Selecione as Permissões para o usuario</h2>
                                 <Grid container>
@@ -122,15 +122,15 @@ class EditarPermissao extends React.Component{
                                     </Grid>
                                     <Grid container direction="row" justify="center" alignItems="center" >
                                         <div className="button">
-                                            <Button variant="contained" color="secondary" className="button" onClick={this.cancel}>
+                                            <Button variant="contained" color="secondary" id="button" onClick={this.cancel}>
                                                 <HighlightOff />
                                                 Cancelar
                                             </Button>
                                         </div>
                                         <div className="button">
-                                            <Button variant="contained" color="primary" className="button" onClick={this.onSubmit}>
+                                            <Button variant="contained" color="primary" onClick={this.onSubmit}>
                                                 <SaveIcon />
-                                                Enviar
+                                                Salvar
                                             </Button>
                                         </div>
                                     </Grid>

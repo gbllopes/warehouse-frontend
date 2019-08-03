@@ -38,9 +38,9 @@ class UserPermission extends React.Component{
         return(
             <div>
                 <Container fixed >
-                    <Box boxShadow={3} pt={3}>
+                    <Box boxShadow={3} p={3}>
                         <Container>
-                            <Box boxShadow={3} pt={3}>
+                            <Box>
                                 <div style={{margin: '50px'}}>
                                     <h2>Filtrar Responsaveis</h2>
                                     <Grid>
