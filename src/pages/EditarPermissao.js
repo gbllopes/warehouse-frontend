@@ -9,6 +9,8 @@ import FaceIcon from '@material-ui/icons/Face';
 import '../css/EditarPermissao.css'
 import { toastr } from 'react-redux-toastr';
 import history from '../history'
+import { connect } from 'react-redux';
+import data from '../reducers/data'
 
 class EditarPermissao extends React.Component{
 
@@ -143,4 +145,4 @@ class EditarPermissao extends React.Component{
 }
 
 
-export default EditarPermissao;
+export default connect((state)=>state,{load: data})(EditarPermissao);

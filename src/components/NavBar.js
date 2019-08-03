@@ -27,10 +27,10 @@ import AddCircle from '@material-ui/icons/AddCircle'
 import Assignment from "@material-ui/icons/Assignment";
 import Build from '@material-ui/icons/Build'
 import VpnKey from '@material-ui/icons/VpnKey'
-import Face from '@material-ui/icons/Face'
+import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew'
 
-import {tokenDecode} from '../authentication/oauthHandler'
-import { Menu, Paper } from '@material-ui/core';
+import {tokenDecode, logout} from '../authentication/oauthHandler'
+import { Grid } from '@material-ui/core';
 
 const drawerWidth = 240;
 
@@ -99,8 +99,8 @@ const useStyles = makeStyles(theme => ({
   nested: {
       paddingLeft: theme.spacing(4)
   },
-  menu: {
-      alignContent: 'right'
+  buttonLogout: {
+      color: '#fafafa'
   }
 }));
 
@@ -110,7 +110,6 @@ export default function NavBar(props) {
   const [open, setOpen] = React.useState(true);
   const [menuOpen1, setMenuOpen1] = React.useState(false);
   const [menuOpen2, setMenuOpen2] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
 
   function handleDrawerOpen() {
     setOpen(true);
@@ -191,9 +190,8 @@ export default function NavBar(props) {
     ]
 
     const tokenDecoded = tokenDecode(localStorage.getItem('access_token'));
-
     const menuHaveAccess = () => {
-        if(tokenDecoded.authorities !== undefined){
+        if(tokenDecoded && tokenDecoded.authorities){
             const menus = []
             tokenDecoded.authorities.forEach(permission => {
                 menuItens.forEach(item => {
@@ -228,23 +226,16 @@ export default function NavBar(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6">
             ALMOXARIFADO
           </Typography>
-          <Typography className={classes.menu}>
-                <IconButton  onClick={(event)=> setAnchorEl({anchorEl: event.currentTarget})} color="secondary">
-                    <Face/>
-                </IconButton>
-                <Paper>
-                    <Menu
-                        id="simple-menu"
-                        anchorEl={anchorEl}
-                        open={Boolean(anchorEl)}
-                        onClose={() => ''}
-                        >
-                    </Menu>
-                </Paper>
-          </Typography>
+
+          <Grid container direction="row" justify="flex-end" alignItems="center" >
+            <IconButton className={classes.buttonLogout} onClick={logout}>
+                <PowerSettingsNew  />
+            </IconButton>
+          </Grid>
+
         </Toolbar>
       </AppBar>
       <Drawer
