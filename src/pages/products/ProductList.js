@@ -56,6 +56,9 @@ class ProductList extends React.Component{
         }
     ]
 
+    closeModal = (openModal) =>{
+        this.setState({ openModal });
+    }
 
     renderModal(){
         const { openModal, item } = this.state;
@@ -83,8 +86,8 @@ class ProductList extends React.Component{
                     
                     <Box boxShadow={5}>
                         <TablePageable data={this.props.allProducts} columns={this.colunas} actions={this.actions}/>
+                        {this.renderModal()}
                     </Box>
-
                 </Container>
             </Box>
         </Container>    
