@@ -78,7 +78,7 @@ class ProductForm extends React.Component{
             
           /> 
          <FormControl>
-            { touched && error && <FormHelperText>{error}</FormHelperText>}  
+            { touched && error && <FormHelperText error >{error}</FormHelperText>}  
          </FormControl>
           </>
         );
