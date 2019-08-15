@@ -1,6 +1,0 @@
-export const CURRENT_ADD = "CURRENT_ADD"; 
-export const PRODUCT_ADD = "PRODUCT_ADD";
-export const CLEAN_PRODUCTS = "CLEAN_PRODUCTS";
-export const DELETE_FROM_CART = "DELETE_FROM_CART";
-export const EDIT_FROM_CART = "EDIT_FROM_CART";
-export const PRODUCT_LIST = "PRODUCT_LIST";
