@@ -1,0 +1,26 @@
+.permissao{
+    width: 50vh;
+    height: 30vh;
+}
+
+.content{
+    margin: 5px 50px 20px 50px;
+}
+
+.chip{
+    margin-top: 5px;
+}
+
+.button{
+    margin: 10px 10px 10px 10px;
+}
+
+
+#button{
+    background-color: #e24738;
+
+}
+
+#container{
+    margin-bottom: 50px !important;
+}
