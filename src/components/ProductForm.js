@@ -124,7 +124,7 @@ class ProductForm extends React.Component{
                         </Grid> 
                         <Grid item xs={12} md={4}>
                             <Field 
-                                name="empresa.noRazaoSocial" 
+                                name="empresa.no_razao_social" 
                                 label="Empresa"  
                                 type="text"
                                 disabled

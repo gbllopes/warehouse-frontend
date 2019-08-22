@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, {useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -29,8 +29,9 @@ import Assignment from "@material-ui/icons/Assignment";
 import Build from '@material-ui/icons/Build'
 import VpnKey from '@material-ui/icons/VpnKey'
 import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew'
+import { rest } from '../authentication/tokenConfig';
 
-import {tokenDecode, logout} from '../authentication/oauthHandler'
+import {logout} from '../authentication/oauthHandler'
 import { Grid } from '@material-ui/core';
 
 const drawerWidth = 240;
@@ -105,12 +106,21 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function NavBar(props) {
+
+const NavBar = (props) =>{
+
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
-  const [menuOpen1, setMenuOpen1] = React.useState(false);
-  const [menuOpen2, setMenuOpen2] = React.useState(false);
+  const [open, setOpen] = useState(true);
+  const [menuOpen1, setMenuOpen1] = useState(false);
+  const [menuOpen2, setMenuOpen2] = useState(false);
+  const [permissions, setPermissions] = useState();
+
+  useEffect(() =>{
+    rest('').get('/api/user-authorities/').then(response =>{
+      setPermissions(response.data);
+    });
+  }, []);
 
   function handleDrawerOpen() {
     setOpen(true);
@@ -198,20 +208,21 @@ export default function NavBar(props) {
         }
     ]
 
-    const tokenDecoded = tokenDecode(localStorage.getItem('access_token'));
-    const menuHaveAccess = () => {
-        if(tokenDecoded && tokenDecoded.authorities){
-            const menus = []
-            tokenDecoded.authorities.forEach(permission => {
-                menuItens.forEach(item => {
-                    if(permission.includes(item.permission)){
-                        menus.push(item.item);
-                    }
-                })
-            })
-            return menus;
-        }
-        return [];
+    
+
+    const menuHaveAccess = () => {   
+      if(permissions && permissions.authorities){
+        const menu = [];   
+        permissions.authorities.forEach(permission =>{
+          menuItens.forEach(item =>{
+            if(permission.includes(item.permission)){
+              menu.push(item.item);
+            }
+          })
+        })
+        return menu;
+      }
+      return [];
     }
 
   return (
@@ -266,7 +277,7 @@ export default function NavBar(props) {
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </div>
-        <Divider />
+        <Divider /> 
         <List>
             {menuHaveAccess()}
         </List>
@@ -278,3 +289,5 @@ export default function NavBar(props) {
     </div>
   );
 }
+
+export default NavBar;

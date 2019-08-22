@@ -7,7 +7,7 @@ import { AUTHENTICATED, NOT_AUTHENTICATED } from '../constants/login'
 export const autenticarUsuario = usuario => async dispatch =>{
   try{
     const GET_TOKEN = `${ENDPOINT}/oauth/token`;
-    const body = `client=warehouse&username=${usuario.email}&password=${usuario.password}&grant_type=password`
+    const body = `username=${usuario.email}&password=${usuario.password}&grant_type=password&client_id=2&client_secret=KAMiqQc4ZI5CLmh9k44N0ebG0MoFfS3itefVJ2Pr`
     const response = await rest(GET_TOKEN).post(GET_TOKEN, body);
     if(response.status === 200){
       handlerToken(response.data.access_token);

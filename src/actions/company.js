@@ -3,7 +3,7 @@ import { rest } from '../authentication/tokenConfig';
 
 export const addCompany = (formValues) => async dispatch =>{
     try{
-        await rest('').post('/company', {...formValues});
+        await rest('').post('/api/empresa', {...formValues});
         dispatch({ type: ADD_COMPANY, msg: "Empresa cadastrada com Sucesso"});
     }catch(e){
         dispatch({ type: ADD_COMPANY, msg : "Erro ao cadastrar Empresa"});

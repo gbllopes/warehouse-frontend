@@ -23,14 +23,13 @@ class EmpresaCadastro extends React.Component{
 
 
     async componentDidMount(){
-        const response = await rest("").get("responsavel/logado").then(response => {
-            return response.data;
-        })
-        this.setState({empresaCadastrada: response.empresa});
+        await rest("").get("/api/responsavel/logado").then(response =>{
+            this.setState({empresaCadastrada: response.data[0].empresa});
+        });
     }
 
     onCompanyFormSubmit = (formValues,e) =>{
-        formValues.nrCnpjEmpresa = cnpj.strip(formValues.nrCnpjEmpresa);
+        formValues.nr_cnpj_empresa = cnpj.strip(formValues.nr_cnpj_empresa);
         this.props.addCompany(formValues);
         toastr.success("Sucesso","Sua empresa foi cadastrada.")
     }
@@ -81,7 +80,7 @@ class EmpresaCadastro extends React.Component{
                             <Grid container spacing={3} id="cardContent">
                                 <Grid item xs={12} sm={12} >
                                     <Field
-                                        name="noRazaoSocial"
+                                        name="no_razao_social"
                                         label="Nome/Razão Social"
                                         component={this.renderFieldInput}
                                     />
@@ -89,14 +88,14 @@ class EmpresaCadastro extends React.Component{
 
                                 <Grid item xs={12} sm={4}>
                                     <Field
-                                        name="siglaEmpresa"
+                                        name="sigla_empresa"
                                         label="Sigla da Empresa"
                                         component={this.renderFieldInput}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
                                     <Field
-                                        name="nrCnpjEmpresa"
+                                        name="nr_cnpj_empresa"
                                         label="CNPJ"
                                         component={this.renderFieldInput}
                                         
@@ -104,14 +103,14 @@ class EmpresaCadastro extends React.Component{
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
                                     <Field
-                                        name="telefoneEmpresa"
+                                        name="telefone_empresa"
                                         label="Telefone"
                                         component={this.renderFieldInput}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={3}>
                                     <Field
-                                        name="dataFundacaoEmpresa"
+                                        name="data_fundacao_empresa"
                                         label="Data da Fundação"
                                         type="date"
                                         component={this.renderFieldInput}
@@ -119,7 +118,7 @@ class EmpresaCadastro extends React.Component{
                                 </Grid>
                                 <Grid item xs={12} sm={9}>
                                     <Field
-                                        name="emailEmpresa"
+                                        name="email_empresa"
                                         label="Email"
                                         component={this.renderFieldInput}
                                     />
@@ -146,11 +145,11 @@ const afterSubmitSuccess = (result, dispatch) => dispatch(reset('companyForm'));
 const validate = formValues =>{
     const errors = [];
     const requiredFields = [
-        'noRazaoSocial',
-        'siglaEmpresa',
-        'telefoneEmpresa',
-        'dataFundacaoEmpresa',
-        'nrCnpjEmpresa'
+        'no_razao_social',
+        'sigla_empresa',
+        'telefone_empresa',
+        'data_fundacao_empresa',
+        'nr_cnpj_empresa'
     ];
     requiredFields.forEach(field =>{
         if(!formValues[field]){
@@ -158,18 +157,18 @@ const validate = formValues =>{
         }
     })
 
-    if(!formValues.emailEmpresa){
-        errors.emailEmpresa = "Campo de preenchimento obrigatório";
+    if(!formValues.email_empresa){
+        errors.email_empresa = "Campo de preenchimento obrigatório";
     }else if (
-        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formValues.emailEmpresa)
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formValues.email_empresa)
     ) {
-        errors.emailEmpresa = "Insira um endereço de email válido";
+        errors.email_empresa = "Insira um endereço de email válido";
     }
 
-    if(!formValues.nrCnpjEmpresa){
-        errors.nrCnpjEmpresa = "Campo de preenchimento obrigatório"
-    }else if (!cnpj.isValid(formValues.nrCnpjEmpresa)){
-        errors.nrCnpjEmpresa = "Insira um CNPJ válido";
+    if(!formValues.nr_cnpj_empresa){
+        errors.nr_cnpj_empresa = "Campo de preenchimento obrigatório"
+    }else if (!cnpj.isValid(formValues.nr_cnpj_empresa)){
+        errors.nr_cnpj_empresa = "Insira um CNPJ válido";
     }
 
     return errors;

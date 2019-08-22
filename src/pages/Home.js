@@ -5,9 +5,6 @@ import Grid from '@material-ui/core/Grid'
 import {Line} from 'react-chartjs-2';
 import {Pie} from 'react-chartjs-2';
 
-import { ENDPOINT } from '../constants/token';
-import { rest } from '../authentication/tokenConfig';
-
 class Home extends React.Component {
 
     data = {
@@ -59,11 +56,6 @@ class Home extends React.Component {
       };
 
     state = {dados: []}
-
-    componentDidMount = () =>{
-        console.log(localStorage.getItem("access_token"))
-        rest('').get(`${ENDPOINT}/company`);
-    }
 
     render(){
         return(

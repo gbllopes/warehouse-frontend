@@ -7,15 +7,14 @@ export const rest = (path) =>  {
     return Axios.create({
       baseURL: ENDPOINT,
       headers: {
-        'Authorization': 'Basic d2FyZWhvdXNlOndAcjNob3VzMw==',
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/x-www-form-urlencoded;',
       }
     })
   }
   return Axios.create({
     baseURL: ENDPOINT,
     headers: {
-      'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+      'Authorization': `Bearer ${localStorage.getItem("access_token")}`,
     }
   })
 }

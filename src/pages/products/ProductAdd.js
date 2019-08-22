@@ -20,9 +20,8 @@ class ProductAdd extends React.Component{
 
    state = { empresa: null , openModal: false, item: null, index:null}
    async componentDidMount(){
-      await rest('').get('/responsavel/logado').then(response =>{
-         this.setState({ empresa : response.data.empresa})
-      })
+      const response = await rest('').get('/api/responsavel/logado');
+      this.setState({ empresa : response.data[0].empresa});
    }
 
     colunas = [
