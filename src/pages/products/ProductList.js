@@ -26,8 +26,8 @@ class ProductList extends React.Component{
 
 
     fetchIdEmpresa = async () =>{
-        await rest('').get('/responsavel/logado').then(response => {
-            this.setState({idEmpresa: response.data.empresa.idEmpresa })
+        await rest('').get('/api/responsavel/logado').then(response => {
+            this.setState({idEmpresa: response.data[0].empresa.id_empresa })
         });
     }
 
@@ -42,7 +42,7 @@ class ProductList extends React.Component{
     colunas = [
         {
             tittle: "Nome",
-            atributo: "noProduto"
+            atributo: "no_produto"
         },
         {
             tittle: "Fabricante",
@@ -50,15 +50,15 @@ class ProductList extends React.Component{
         },
         {
             tittle: "Qtde em Estoque",
-            atributo: "qtdeProduto"
+            atributo: "qtde_produto"
         },
         {
             tittle: "Cod. Produto",
-            atributo: "codigoProduto"
+            atributo: "codigo_produto"
         },
         {
             tittle: "Setor",
-            atributo: "setor.dsSetor"
+            atributo: "setor.ds_setor"
         }
 
     ];

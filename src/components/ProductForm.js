@@ -21,7 +21,7 @@ import '../css/Form.css'
 class ProductForm extends React.Component{
     state = { setores : [] , empresa: {}};
     async componentDidMount(){
-        await rest("").get("/setor").then(response => {
+        await rest("").get("/api/setor").then(response => {
             this.setState({ setores: response.data});
         })
     }
@@ -102,7 +102,7 @@ class ProductForm extends React.Component{
                     <Grid container spacing={3} id="cardContent">      
                         <Grid item xs={12} md={4} >
                             <Field 
-                                name="noProduto" 
+                                name="no_produto" 
                                 label="Nome" 
                                 component={this.renderFieldInput}  
                             />
@@ -116,7 +116,7 @@ class ProductForm extends React.Component{
                         </Grid>
                         <Grid item xs={12} md={4}>
                             <Field 
-                                name="qtdeProduto" 
+                                name="qtde_produto" 
                                 label="Qtde em Estoque" 
                                 type="number" 
                                 component={this.renderFieldInput}  
@@ -133,7 +133,7 @@ class ProductForm extends React.Component{
                         </Grid> 
                         <Grid item xs={12} md={4}>
                             <Field 
-                                name="codigoProduto" 
+                                name="codigo_produto" 
                                 label="Cod. Produto"  
                                 type="text"
                                 component={this.renderFieldInput} 
@@ -148,7 +148,7 @@ class ProductForm extends React.Component{
                                     placeholder="Setor do Produto"
                                 >
                                     {this.state.setores.map(setor =>{
-                                        return  <MenuItem key={setor.idSetor} value={setor}>{setor.dsSetor}</MenuItem>
+                                        return  <MenuItem key={setor.id_setor} value={setor}>{setor.ds_setor}</MenuItem>
                                     })}
                                 </Field>
                             </FormControl>
@@ -173,10 +173,10 @@ const validate = (formValues) =>{
     const errors = {}
     formValues.empresa = !formValues.empresa ? {}: formValues.empresa;
     const requiredFields = [
-        'noProduto',
+        'no_produto',
         'fabricante',
         'tipo',
-        'codigoProduto',
+        'codigo_produto',
     ]
 
     requiredFields.forEach(field => {
@@ -189,10 +189,10 @@ const validate = (formValues) =>{
         errors.setor = "Campo Obrigatório";
     }
 
-    if(!formValues.qtdeProduto){
-        errors.qtdeProduto = "Campo Obrigatório"
-    }else if (isNaN(Number(formValues.qtdeProduto))){
-        errors.qtdeProduto = "Somente números são aceitos";
+    if(!formValues.qtde_produto){
+        errors.qtde_produto = "Campo Obrigatório"
+    }else if (isNaN(Number(formValues.qtde_produto))){
+        errors.qtde_produto = "Somente números são aceitos";
     }
 
     return errors;

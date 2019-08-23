@@ -27,7 +27,7 @@ class ProductAdd extends React.Component{
     colunas = [
         {
             tittle: "Nome",
-            atributo: "noProduto"
+            atributo: "no_produto"
         },
         {
             tittle: "Fabricante",
@@ -35,15 +35,15 @@ class ProductAdd extends React.Component{
         },
         {
             tittle: "Qtde em Estoque",
-            atributo: "qtdeProduto"
+            atributo: "qtde_produto"
         },
         {
             tittle: "Cod. Produto",
-            atributo: "codigoProduto"
+            atributo: "codigo_produto"
         },
         {
             tittle: "Setor",
-            atributo: "setor.dsSetor"
+            atributo: "setor.ds_setor"
         }
     ];
 

@@ -31,7 +31,7 @@ export const cleanProducts = () => dispatch =>{
 
 export const produtcsAdd = (form) => async dispatch =>{
     try{
-        const response = await rest('').post('/products', form);
+        const response = await rest('').post('/api/products', form);
         dispatch({ type: PRODUCT_ADD, payload: response.status});
     }catch(e){
         dispatch({ type: PRODUCT_ADD, payload: 500});
@@ -41,7 +41,7 @@ export const produtcsAdd = (form) => async dispatch =>{
 
 export const productList = (idCompany) => async dispatch => {
     try{
-        const response = await rest('').get(`/products/company/${idCompany}`);
+        const response = await rest('').get(`/api/products/company/${idCompany}`);
         dispatch({ type : PRODUCT_LIST, payload: response.data});
     }catch(e){
         
