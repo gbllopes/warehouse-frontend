@@ -20,7 +20,7 @@ class ProductAdd extends React.Component{
 
    state = { empresa: null , openModal: false, item: null, index:null}
    async componentDidMount(){
-      const response = await rest('').get('/api/responsavel/logado');
+      const response = await rest('').get('/responsavel/logado');
       this.setState({ empresa : response.data[0].empresa});
    }
 
@@ -56,7 +56,11 @@ class ProductAdd extends React.Component{
         {
            tittle: 'Excluir',
            icon: 'delete_forever',
-           callback: (item,index) => this.props.deleteFromCart(index)
+           callback: (item,index) => {
+              if(window.confirm("Tem certeza que deseja deletar este produto do carrinho?")){
+               this.props.deleteFromCart(index);
+              }           
+            }
         }
     ]
 

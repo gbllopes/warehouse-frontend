@@ -117,7 +117,7 @@ const NavBar = (props) =>{
   const [permissions, setPermissions] = useState();
 
   useEffect(() =>{
-    rest('').get('/api/user-authorities/').then(response =>{
+    rest('').get('/user-authorities/').then(response =>{
       setPermissions(response.data);
     });
   }, []);

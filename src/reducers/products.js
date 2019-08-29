@@ -14,7 +14,7 @@ export default (state = {}, action) =>{
             return {...state, ...action.payload};
         case PRODUCT_EDIT:
                var products =  Object.values(state).map(product => {
-                    if (product.idProduto === action.payload.idProduto){
+                    if (product.id_produto === action.payload.id_produto){
                         product = action.payload
                     } 
                     return product;  
@@ -26,7 +26,7 @@ export default (state = {}, action) =>{
             return {...action.payload}
         case DELETE_FROM_STORE:
             return {
-               ...Object.values(state).filter(product => product.idProduto !== action.payload)
+               ...Object.values(state).filter(product => product.id_produto !== action.payload)
            };
         default:
             return state;

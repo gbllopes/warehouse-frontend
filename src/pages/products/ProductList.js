@@ -17,7 +17,7 @@ import '../../css/Lista.css';
 
 
 class ProductList extends React.Component{
-    state = { openModal: false, item: null, idEmpresa: null}
+    state = { openModal: false, item: null, empresa: null}
 
     async componentDidMount(){
         await this.fetchIdEmpresa()
@@ -26,7 +26,7 @@ class ProductList extends React.Component{
 
 
     fetchIdEmpresa = async () =>{
-        await rest('').get('/api/responsavel/logado').then(response => {
+        await rest('').get('/responsavel/logado').then(response => {
             this.setState({idEmpresa: response.data[0].empresa.id_empresa })
         });
     }
@@ -73,7 +73,9 @@ class ProductList extends React.Component{
            tittle: 'Excluir',
            icon: 'delete_forever',
            callback: (item) => {
-                this.props.productDelete(item.idProduto)
+               if(window.confirm("Tem certeza que deseja deletar esse produto de sua base de dados?")){
+                this.props.productDelete(item.id_produto)
+               }      
            }
 
         }
@@ -88,7 +90,7 @@ class ProductList extends React.Component{
         if(openModal){
            return (
               <Modal title="Editar" open={openModal} onClose={this.closeModal}>
-                    <ProductEdit product={item}/>
+                    <ProductEdit product={item} />
               </Modal>
            );
 

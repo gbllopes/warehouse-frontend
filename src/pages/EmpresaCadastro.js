@@ -23,7 +23,7 @@ class EmpresaCadastro extends React.Component{
 
 
     async componentDidMount(){
-        await rest("").get("/api/responsavel/logado").then(response =>{
+        await rest("").get("/responsavel/logado").then(response =>{
             this.setState({empresaCadastrada: response.data[0].empresa});
         });
     }

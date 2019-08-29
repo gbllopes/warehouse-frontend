@@ -21,7 +21,7 @@ import '../css/Form.css'
 class ProductForm extends React.Component{
     state = { setores : [] , empresa: {}};
     async componentDidMount(){
-        await rest("").get("/api/setor").then(response => {
+        await rest("").get("/setor").then(response => {
             this.setState({ setores: response.data});
         })
     }
